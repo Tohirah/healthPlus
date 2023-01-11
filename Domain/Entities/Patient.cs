@@ -1,8 +1,7 @@
-﻿using HealthPlus.Domain.Enums;
-
+﻿
 namespace HealthPlus.Domain.Entities
 {
-    public class Patient
+    public class Patient : BaseEntity
     {
 
         public DateTime DateOfBirth { get; set; }

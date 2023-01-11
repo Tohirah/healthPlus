@@ -1,5 +1,4 @@
 ﻿using HealthPlus.Domain.Enum;
-using HealthPlus.Domain.Enums;
 
 namespace HealthPlus.Domain.Entities
 {
