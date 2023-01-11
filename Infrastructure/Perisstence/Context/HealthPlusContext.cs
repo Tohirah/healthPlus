@@ -2,13 +2,14 @@
 using static System.Net.Mime.MediaTypeNames;
 using System.Collections.Generic;
 using System.Numerics;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthPlus.Infrastructure.Persistence.Context
 {
     public class HealthPlusContext : DbContext
 
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public HealthPlusContext(DbContextOptions<HealthPlusContext> options) : base(options)
         {
         }
 
