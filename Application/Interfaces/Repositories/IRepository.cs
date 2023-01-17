@@ -2,13 +2,13 @@
 
 namespace HealthPlus.Application.Interfaces.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository
     {
-        T Add(T entity);
-        T Delete(T entity);
-        T Update(T entity);
-        T Get(Expression<Func<T, bool>> expression;
-        IList<T> GetAll(Expression<Func<T, bool>> expression = null);
+        T Add<T>(T entity) where T : class, new();
+        T Delete<T>(T entity) where T : class, new();
+        T Update<T>(T entity) where T : class, new();
+        T Get<T>(Expression<Func<T, bool>> expression) where T : class, new();
+        IList<T> GetAll<T>(Expression<Func<T, bool>> expression = null) where T : class, new();
         int SaveChanges();
     }
 }
