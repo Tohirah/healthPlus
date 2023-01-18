@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace HealthPlus.Infrastructure.Perisstence.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T : class, new()
+    public class BaseRepository : IRepository
     {
         private readonly HealthPlusContext _context;
 
@@ -12,22 +12,23 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
         {
             _context = context;
         }
-        public T Add(T entity)
+        public T Add<T> (T entity) where T : class, new()
         {
             _context.Set<T>().Add(entity);
             return entity;
         }
-        public T Delete(T entity)
+       
+        public T Delete<T> (T entity) where T : class, new()
         {
             _context.Set<T>().Remove(entity);
             return entity;
         }
-        public T Get(Expression<Func<T, bool>> expression)
+        public T Get<T> (Expression<Func<T, bool>> expression) where T : class, new()
         {
             return _context.Set<T>().SingleOrDefault(expression);
         }
 
-        public IList<T> GetAll(Expression<Func<T, bool>>? expression = null)
+        public IList<T> GetAll<T> (Expression<Func<T, bool>>? expression = null) where T : class, new()
         {
             return _context.Set<T>().ToList();
         }
@@ -37,7 +38,7 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             return _context.SaveChanges();
         }
 
-        public T Update(T entity)
+        public T Update<T> (T entity) where T : class, new()
         {
             _context.Set<T>().Update(entity);
             return entity;
