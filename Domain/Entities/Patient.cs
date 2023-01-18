@@ -1,10 +1,10 @@
-﻿using HealthPlus.Domain.Enums;
-
+﻿
 namespace HealthPlus.Domain.Entities
 {
-    public class Patient
+    public class Patient : BaseEntity
     {
 
+        public string PatientNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string BloodGroup { get; set; }
         public string Genotype { get; set; }
