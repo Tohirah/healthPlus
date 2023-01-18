@@ -53,5 +53,10 @@ namespace HealthPlus.Application.Services
                 Status = true
             };
         }
+
+        public BaseResponse UpdatePatient()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
