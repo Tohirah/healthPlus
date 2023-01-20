@@ -7,20 +7,18 @@ namespace HealthPlus.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class DoctorController : ControllerBase
     {
-        private readonly IRoleService _roleService;
+        private readonly IDoctorService _doctorService;
 
-        public RoleController(IRoleService roleService) 
+        public DoctorController(IDoctorService doctorService)
         {
-            _roleService = roleService;
+            _doctorService = doctorService;
         }
-
         [HttpPost]
-        public IActionResult CreateRole([FromBody] CreateRoleRequestModel request)
+        public IActionResult CreateDoctor([FromBody] CreateDoctorRequestModel request)
         {
-            var response = _roleService.CreateRole(request);
-            
+            var response = _doctorService.CreateDoctor(request);
             return response.Status? Ok(response) : BadRequest(response);
         }
     }

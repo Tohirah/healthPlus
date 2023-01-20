@@ -24,5 +24,22 @@ namespace HealthPlus.Controllers
 
             return response.Status?Ok(response) : BadRequest(response);
         }
+
+
+        [HttpGet("{id}")]
+        public IActionResult getpatientbyid([FromQuery] int id)
+        {
+            var response = _patientService.GetPatientbyId(id);
+
+            return (response != null) ? ok(response) : NotFound(response);
+        }
+
+        //[HttpPost]
+        //public IActionResult GetPatients()
+        //{
+        //    var response = _patientService.GetPatients();
+
+        //    return (response != null) ? Ok(response) : BadRequest(response);
+        //}
     }
 }

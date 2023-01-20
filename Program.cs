@@ -17,7 +17,8 @@ var connectionString = builder.Configuration.GetConnectionString("ConnectionCont
 builder.Services.AddDbContext<HealthPlusContext>(x => x.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddScoped<IRepository, BaseRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
-builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 var app = builder.Build();
 
 

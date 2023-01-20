@@ -2,8 +2,8 @@
 
 namespace HealthPlus.Application.Interfaces.Services
 {
-    public interface IRoleService
+    public interface IDoctorService
     {
-        BaseResponse CreateRole(CreateRoleRequestModel request);
+        BaseResponse CreateDoctor(CreateDoctorRequestModel request);
     }
 }
