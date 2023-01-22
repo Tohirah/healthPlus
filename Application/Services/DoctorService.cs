@@ -50,5 +50,85 @@ namespace HealthPlus.Application.Services
                 Status = true
             };
         }
+
+        public DoctorResponseModel GetDoctorById(int id)
+        {
+            var doctor = _doctorRepository.Get<Doctor>(x => x.Id == id);
+            var user = _doctorRepository.Get<User>(x => x.Id == id);
+
+            if (doctor == null)
+            {
+                return new DoctorResponseModel
+                {
+                    Message = $"No record found for doctor with Id {id}",
+                    Status = false
+                };
+
+            }
+            return new DoctorResponseModel
+            {
+                FirstName = user.FirstName,
+                DoctorNumber = doctor.DoctorNumber,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                Address = user.Address,
+                DateOfBirth = doctor.DateOfBirth,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Password = user.Password,
+                Status = true
+            };
+        }
+
+        public DoctorResponseModel GetDoctorByDoctorNumber (string doctorNumber)
+        {
+            var doctor = _doctorRepository.Get<Doctor>(x=> x.DoctorNumber == doctorNumber);
+            var user = _doctorRepository.Get<User>(x => x.Id == doctor.Id);
+            if(doctor == null)
+            {
+                return new DoctorResponseModel
+                {
+                    Message = $"No Record found with Doctor Number {doctorNumber}",
+                    Status = false
+                };
+            }
+
+            return new DoctorResponseModel
+            {
+                DoctorNumber = doctor.DoctorNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                Password = user.Password,
+                Email = user.Email,
+                DateOfBirth = doctor.DateOfBirth,
+                Status = true
+            };
+        }
+
+
+        // How to map responsemodel using both doctor and user entities
+        //public IList<DoctorResponseModel> GetDoctors()
+        //{
+        //    var doctors = _doctorRepository.GetAll<Doctor>();
+        //    var users = _doctorRepository.GetAll<User>();
+
+
+        //    var doctorResponse= users.Select(x => new DoctorResponseModel
+        //    {
+        //        FirstName = x.FirstName,
+        //        LastName = x.LastName,
+        //        Gender = x.Gender,
+        //        Address = x.Address,
+        //        PhoneNumber = x.PhoneNumber,
+        //        Password = x.Password,
+        //        Email = x.Email,
+        //    }).ToList();
+
+        //    return doctorResponse;
+        //}
+
     }
 }

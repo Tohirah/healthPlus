@@ -2,10 +2,10 @@
 
 namespace HealthPlus.Application.DTOs
 {
-    public class PatientResponseModel : BaseResponse
+    public class DoctorResponseModel : BaseResponse
     {
         public string Password { get; set; }
-        public string PatientNumber { get; set; }
+        public string DoctorNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Gender Gender { get; set; }
@@ -13,9 +13,6 @@ namespace HealthPlus.Application.DTOs
         public string Email { get; set; }
         public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string BloodGroup { get; set; }
-        public string Genotype { get; set; }
-        public string Allergies { get; set; }
-        public string EmergencyContact { get; set; }
+    
     }
 }
