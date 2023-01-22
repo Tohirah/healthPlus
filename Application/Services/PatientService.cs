@@ -68,6 +68,7 @@ namespace HealthPlus.Application.Services
 
             return new PatientResponseModel
             {
+                PatientNumber = patient.PatientNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Gender = user.Gender,
@@ -109,25 +110,26 @@ namespace HealthPlus.Application.Services
             };
         }
 
-        public IList<PatientResponseModel> GetPatients()
-        {
+        // How to map responsemodel using both patient and user entities
+        //public IList<PatientResponseModel> GetPatients()
+        //{
 
-            var patients = _repository.GetAll<Patient>();
-            var users = _repository.GetAll<User>();
+        //    var patients = _repository.GetAll<Patient>();
+        //    var users = _repository.GetAll<User>();
 
 
-            var patientResponse = users.Select(x => new PatientResponseModel()
-            {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Gender = x.Gender,
-                Address = x.Address,
-                Email = x.Email,
-                PhoneNumber = x.PhoneNumber,
-                Password = x.Password
-            }).ToList();
+        //    var patientResponse = users.Select(x => new PatientResponseModel()
+        //    {
+        //        FirstName = x.FirstName,
+        //        LastName = x.LastName,
+        //        Gender = x.Gender,
+        //        Address = x.Address,
+        //        Email = x.Email,
+        //        PhoneNumber = x.PhoneNumber,
+        //        Password = x.Password
+        //    }).ToList();
 
-            return patientResponse;
-        }
+        //    return patientResponse;
+        //}
     }
 }

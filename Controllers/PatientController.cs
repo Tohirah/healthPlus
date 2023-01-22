@@ -34,6 +34,14 @@ namespace HealthPlus.Controllers
             return (response != null) ? Ok(response) : NotFound(response);
         }
 
+        [HttpGet("{patientNumber}")]
+        public IActionResult GetPatientByPatientNumber(string patientNumber)
+        {
+            var response = _patientService.GetPatientByPatientNumber(patientNumber);
+
+            return response.Status ? Ok(response) : NotFound(response.Message);
+        }
+
         //[HttpPost]
         //public IActionResult GetPatients()
         //{

@@ -8,6 +8,6 @@ namespace HealthPlus.Application.Interfaces.Services
         BaseResponse UpdatePatient(UpdatePatientRequestModel request);
         public PatientResponseModel GetPatientById(int id);
         public PatientResponseModel GetPatientByPatientNumber(string patientNumber);
-        public IList<PatientResponseModel> GetPatients();
+        //public IList<PatientResponseModel> GetPatients();
     }
 }

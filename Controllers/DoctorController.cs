@@ -21,5 +21,25 @@ namespace HealthPlus.Controllers
             var response = _doctorService.CreateDoctor(request);
             return response.Status? Ok(response) : BadRequest(response);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetDoctorById(int id)
+        {
+            var response = _doctorService.GetDoctorById(id);
+            return response.Status? Ok(response): NotFound(response.Message);
+        }
+
+        [HttpGet("{doctorNumber}")]
+        public IActionResult GetDoctorByDoctorNumber(string doctorNumber)
+        {
+            var response = _doctorService.GetDoctorByDoctorNumber(doctorNumber);
+            return response.Status ? Ok(response) : NotFound(response.Message);
+        }
+
+        ////public IActionResult GetDoctors()
+        ////{
+        ////    var response =_doctorService.GetDoctors();
+        ////    return (response != null) ? Ok(response) : BadRequest();
+        ////}
     }
 }
