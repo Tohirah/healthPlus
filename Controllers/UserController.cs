@@ -24,18 +24,18 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest(response);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetRoleById([FromQuery] int id)
+        [HttpGet("{roleId}")]
+        public IActionResult GetRoleById([FromQuery] int roleId)
         {
-            var response = _userService.GetRoleById(id);
+            var response = _userService.GetRoleById(roleId);
 
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
 
-        [HttpGet("{name}")]
-        public IActionResult GetRoleByName([FromQuery] string name)
+        [HttpGet("{RoleName}")]
+        public IActionResult GetRoleByName([FromQuery] string RoleName)
         {
-            var response = _userService.GetRoleByName(name);
+            var response = _userService.GetRoleByName(RoleName);
 
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
@@ -49,22 +49,22 @@ namespace HealthPlus.Controllers
             return (response != null) ? Ok(response) : BadRequest(response);
         }
 
-        //[HttpGet("{id}")]
-        //public IActionResult GetUserById([FromQuery] int id)
-        //{
-        //    var response = _userService.GetUserById(id);
+        [HttpGet("{UserId}")]
+        public IActionResult GetUserById([FromQuery] int UserId)
+        {
+            var response = _userService.GetUserById(UserId);
 
-        //    return response.Status ? Ok(response) : NotFound(response.Message);
-        //}
+            return response.Status ? Ok(response) : NotFound(response.Message);
+        }
 
 
-        //[HttpGet("{name}")]
-        //public IActionResult GetUserByName([FromQuery] string name)
-        //{
-        //    var response = _userService.GetUserByUsername(name);
+        [HttpGet("{name}")]
+        public IActionResult GetUserByName([FromQuery] string name)
+        {
+            var response = _userService.GetUserByUsername(name);
 
-        //    return response.Status ? Ok(response) : NotFound(response.Message);
-        //}
+            return response.Status ? Ok(response) : NotFound(response.Message);
+        }
 
         //[HttpGet]
         //public IActionResult GetUsers()

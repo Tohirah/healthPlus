@@ -56,28 +56,24 @@ namespace HealthPlus.Application.Services
 
         public BaseResponse UpdatePatient(UpdatePatientRequestModel request)
         {
-            var patientModel = new Patient
-            {
-                Allergies = request.Allergies,
-                BloodGroup = request.BloodGroup,
-                Genotype = request.Genotype,
-                EmergencyContact = request.EmergencyContact,
-                DateOfBirth = request.DateOfBirth
-            };
+            var patient = _repository.GetPatient(x => x.Id == request.Id);
+            patient.User.FirstName = request.FirstName;
+            patient.User.LastName = request.LastName;
+            patient.User.Email = request.Email;
+            patient.User.PhoneNumber = request.PhoneNumber;
+            patient.DateOfBirth = request.DateOfBirth;
+            patient.Allergies = request.Allergies;
+            patient.BloodGroup= request.BloodGroup;
+            patient.Genotype = request.Genotype;
+            patient.DateOfBirth = request.DateOfBirth;
+            patient.EmergencyContact = request.EmergencyContact;
 
-            var userModel = new User
-            {
-                FirstName= request.FirstName,
-                LastName= request.LastName,
-                Address = request.Address,
-                Email = request.Email,
-                PhoneNumber= request.PhoneNumber,
-                Password= request.Password
-            };
-            var patient = _repository.Update<Patient>(patientModel);
-            var user = _repository.Update<User>(userModel);
+        
+
+       
+            var patientUpdate = _repository.Update<Patient>(patient);
             _repository.SaveChanges();
-            if(patientModel == null || userModel == null)
+            if(patientUpdate == null)
             {
                 return new BaseResponse
                 {
@@ -98,20 +94,18 @@ namespace HealthPlus.Application.Services
         public PatientResponseModel GetPatientById(int id)
         {
 
-            var patient = _repository.Get<Patient>(x => x.Id == id);
-            var user = _repository.Get<User>(x => x.Id == id);
+            var patient = _repository.GetPatient(x => x.Id == id);
 
 
             return new PatientResponseModel
             {
                 PatientNumber = patient.PatientNumber,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                Address = user.Address,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
+                FirstName = patient.User.FirstName,
+                LastName = patient.User.LastName,
+                Gender = patient.User.Gender,
+                Address = patient.User.Address,
+                Email = patient.User.Email,
+                PhoneNumber = patient.User.PhoneNumber,
                 Genotype = patient.Genotype,
                 BloodGroup = patient.BloodGroup,
                 DateOfBirth = patient.DateOfBirth,
@@ -124,19 +118,17 @@ namespace HealthPlus.Application.Services
         public PatientResponseModel GetPatientByPatientNumber(string patientNumber)
         {
 
-            var patient = _repository.Get<Patient>(x => x.PatientNumber == patientNumber);
-            var user = _repository.Get<User>(x => x.Id == patient.Id);
+            var patient = _repository.GetPatient(x => x.PatientNumber == patientNumber);
 
 
             return new PatientResponseModel
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                Address = user.Address,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
+                FirstName = patient.User.FirstName,
+                LastName = patient.User.LastName,
+                Gender = patient.User.Gender,
+                Address = patient.User.Address,
+                Email = patient.User.Email,
+                PhoneNumber = patient.User.PhoneNumber,
                 Genotype = patient.Genotype,
                 BloodGroup = patient.BloodGroup,
                 DateOfBirth = patient.DateOfBirth,
@@ -147,25 +139,27 @@ namespace HealthPlus.Application.Services
         }
 
         // How to map responsemodel using both patient and user entities
-        //public IList<PatientResponseModel> GetPatients()
-        //{
+        public IList<PatientResponseModel> GetPatients()
+        {
 
-        //    var patients = _repository.GetAll<Patient>();
-        //    var users = _repository.GetAll<User>();
+            var patients = _repository.GetAllPatient();
 
 
-        //    var patientResponse = users.Select(x => new PatientResponseModel()
-        //    {
-        //        FirstName = x.FirstName,
-        //        LastName = x.LastName,
-        //        Gender = x.Gender,
-        //        Address = x.Address,
-        //        Email = x.Email,
-        //        PhoneNumber = x.PhoneNumber,
-        //        Password = x.Password
-        //    }).ToList();
+            var patientResponse = patients.Select(x => new PatientResponseModel
+            {
+                FirstName = x.User.FirstName,
+                LastName = x.User.LastName,
+                Gender = x.User.Gender,
+                Address = x.User.Address,
+                Email = x.User.Email,
+                PhoneNumber = x.User.PhoneNumber,
+                Allergies= x.Allergies,
+                EmergencyContact = x.EmergencyContact,
+                BloodGroup= x.BloodGroup,
+                Genotype= x.Genotype
+            }).ToList();
 
-        //    return patientResponse;
-        //}
+            return patientResponse;
+        }
     }
 }

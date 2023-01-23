@@ -42,27 +42,20 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
 
-        //[HttpPost]
-        //public IActionResult GetPatients()
-        //{
-        //    var response = _patientService.GetPatients();
+        [HttpGet]
+        public IActionResult GetPatients()
+        {
+            var response = _patientService.GetPatients();
 
-        //    return (response != null) ? Ok(response) : BadRequest(response);
-        //}
+            return Ok(response);
+        }
 
-        //[HttpGet("{id}")]
-        //public IActionResult UpdatePatient([FromBody] int id)
-        //{
-        //    var response = _patientService.GetPatientById(id);
 
-        //    return response.Status ? Ok(response) : NotFound(response.Message);
-        //}
-
-        //[HttpPatch]
-        //public IActionResult UpdatePatient(UpdatePatientRequestModel request)
-        //{
-        //    var response = _patientService.UpdatePatient(request);
-        //    return response.Status? Ok(request) : BadRequest(response);
-        //}
+        [HttpPatch]
+        public IActionResult UpdatePatient(UpdatePatientRequestModel request)
+        {
+            var response = _patientService.UpdatePatient(request);
+            return response.Status ? Ok(request) : BadRequest(response);
+        }
     }
 }

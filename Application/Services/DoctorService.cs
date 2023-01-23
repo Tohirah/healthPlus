@@ -75,7 +75,6 @@ namespace HealthPlus.Application.Services
                 DateOfBirth = doctor.DateOfBirth,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
                 Status = true
             };
         }
@@ -101,7 +100,6 @@ namespace HealthPlus.Application.Services
                 Gender = user.Gender,
                 Address = user.Address,
                 PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
                 Email = user.Email,
                 DateOfBirth = doctor.DateOfBirth,
                 Status = true
