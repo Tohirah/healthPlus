@@ -35,7 +35,7 @@ namespace HealthPlus.Controllers
         }
 
         [HttpGet("{patientNumber}")]
-        public IActionResult GetPatientByPatientNumber(string patientNumber)
+        public IActionResult GetPatientByPatientNumber([FromQuery] string patientNumber)
         {
             var response = _patientService.GetPatientByPatientNumber(patientNumber);
 
@@ -48,6 +48,21 @@ namespace HealthPlus.Controllers
         //    var response = _patientService.GetPatients();
 
         //    return (response != null) ? Ok(response) : BadRequest(response);
+        //}
+
+        //[HttpGet("{id}")]
+        //public IActionResult UpdatePatient([FromBody] int id)
+        //{
+        //    var response = _patientService.GetPatientById(id);
+
+        //    return response.Status ? Ok(response) : NotFound(response.Message);
+        //}
+
+        //[HttpPatch]
+        //public IActionResult UpdatePatient(UpdatePatientRequestModel request)
+        //{
+        //    var response = _patientService.UpdatePatient(request);
+        //    return response.Status? Ok(request) : BadRequest(response);
         //}
     }
 }
