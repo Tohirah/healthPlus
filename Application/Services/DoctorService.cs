@@ -108,6 +108,42 @@ namespace HealthPlus.Application.Services
             };
         }
 
+        public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
+        {
+            var doctorModel = new Doctor
+            {
+                DateOfBirth = request.DateOfBirth
+            };
+
+            var userModel = new User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Password = request.Password,
+                Address = request.Address
+            };
+
+            var doctor = _doctorRepository.Update<Doctor>(doctorModel);
+            var user = _doctorRepository.Update<User>(userModel);
+            _doctorRepository.SaveChanges();
+
+            if(doctorModel == null || userModel == null)
+            {
+                return new BaseResponse
+                { 
+                    Message = "Record Update Not Succcessful",
+                    Status = true
+                };
+            }
+            return new BaseResponse
+            {
+                Message = "Record Updated Succcessfully",
+                Status = true
+            };
+        }
+
 
         // How to map responsemodel using both doctor and user entities
         //public IList<DoctorResponseModel> GetDoctors()

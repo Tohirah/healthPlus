@@ -7,6 +7,7 @@ namespace HealthPlus.Application.Interfaces.Services
         BaseResponse CreateDoctor(CreateDoctorRequestModel request);
         public DoctorResponseModel GetDoctorById(int id);
         public DoctorResponseModel GetDoctorByDoctorNumber(string doctorNumber);
+        public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request);
         //public IList<DoctorResponseModel> GetDoctors()
 
 

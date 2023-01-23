@@ -4,6 +4,7 @@ namespace HealthPlus.Application.DTOs
 {
     public class UpdatePatientRequestModel
     {
+            public int Id { get; set; }
             public string Password { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
@@ -14,5 +15,7 @@ namespace HealthPlus.Application.DTOs
             public string Genotype { get; set; }
             public string Allergies { get; set; }
             public string EmergencyContact { get; set; }
+            public DateTime DateOfBirth { get; set; }
+
     }
 }

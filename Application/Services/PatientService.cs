@@ -56,8 +56,44 @@ namespace HealthPlus.Application.Services
 
         public BaseResponse UpdatePatient(UpdatePatientRequestModel request)
         {
-            throw new NotImplementedException();
+            var patientModel = new Patient
+            {
+                Allergies = request.Allergies,
+                BloodGroup = request.BloodGroup,
+                Genotype = request.Genotype,
+                EmergencyContact = request.EmergencyContact,
+                DateOfBirth = request.DateOfBirth
+            };
+
+            var userModel = new User
+            {
+                FirstName= request.FirstName,
+                LastName= request.LastName,
+                Address = request.Address,
+                Email = request.Email,
+                PhoneNumber= request.PhoneNumber,
+                Password= request.Password
+            };
+            var patient = _repository.Update<Patient>(patientModel);
+            var user = _repository.Update<User>(userModel);
+            _repository.SaveChanges();
+            if(patientModel == null || userModel == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Record Update Not Successful",
+                    Status = false
+                };
+            }
+
+            return new BaseResponse
+            {
+                Message = "Record Update Successfully",
+                Status = true
+            };
+
         }
+        
 
         public PatientResponseModel GetPatientById(int id)
         {
