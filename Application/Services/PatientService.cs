@@ -54,11 +54,9 @@ namespace HealthPlus.Application.Services
             };
         }
 
-        public BaseResponse UpdatePatient(UpdatePatientRequestModel request)
+        public BaseResponse UpdatePatient(int id, UpdatePatientRequestModel request)
         {
-            var patient = _repository.GetPatient(x => x.Id == request.Id);
-            patient.User.FirstName = request.FirstName;
-            patient.User.LastName = request.LastName;
+            var patient = _repository.GetPatient(x => x.Id == id);
             patient.User.Email = request.Email;
             patient.User.PhoneNumber = request.PhoneNumber;
             patient.DateOfBirth = request.DateOfBirth;
@@ -138,7 +136,6 @@ namespace HealthPlus.Application.Services
             };
         }
 
-        // How to map responsemodel using both patient and user entities
         public IList<PatientResponseModel> GetPatients()
         {
 
@@ -161,5 +158,6 @@ namespace HealthPlus.Application.Services
 
             return patientResponse;
         }
+        
     }
 }

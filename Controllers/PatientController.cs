@@ -22,7 +22,7 @@ namespace HealthPlus.Controllers
         {
             var response = _patientService.CreatePatient(request);
 
-            return response.Status?Ok(response) : BadRequest(response);
+            return response.Status ? Ok(response) : BadRequest(response);
         }
 
 
@@ -51,10 +51,10 @@ namespace HealthPlus.Controllers
         }
 
 
-        [HttpPatch]
-        public IActionResult UpdatePatient(UpdatePatientRequestModel request)
+        [HttpPut("{id}")]
+        public IActionResult UpdatePatient([FromRoute] int id,  UpdatePatientRequestModel request)
         {
-            var response = _patientService.UpdatePatient(request);
+            var response = _patientService.UpdatePatient(id, request);
             return response.Status ? Ok(request) : BadRequest(response);
         }
     }

@@ -30,11 +30,6 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             return _context.Set<T>().SingleOrDefault(expression);
         }
 
-        public Patient GetPatient(Expression<Func<Patient, bool>> expression)
-        {
-            return _context.Patients.Include(x => x.User).SingleOrDefault(expression);
-        }
-
         public IList<T> GetAll<T> (Expression<Func<T, bool>>? expression = null) where T : class, new()
         {
             return _context.Set<T>().ToList();
@@ -51,9 +46,15 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             return entity;
         }
 
+        public Patient GetPatient(Expression<Func<Patient, bool>> expression)
+        {
+            return _context.Patients.Include(x => x.User).SingleOrDefault(expression);
+        }
+
         public IList<Patient> GetAllPatient(Expression<Func<Patient, bool>> expression = null)
         {
             return _context.Patients.Include(x => x.User).ToList();
         }
+
     }
 }

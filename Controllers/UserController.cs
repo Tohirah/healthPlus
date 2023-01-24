@@ -24,7 +24,7 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest(response);
         }
 
-        [HttpGet("{roleId}")]
+        [HttpGet("roleId")]
         public IActionResult GetRoleById([FromQuery] int roleId)
         {
             var response = _userService.GetRoleById(roleId);
@@ -32,7 +32,7 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
 
-        [HttpGet("{RoleName}")]
+        [HttpGet("RoleName")]
         public IActionResult GetRoleByName([FromQuery] string RoleName)
         {
             var response = _userService.GetRoleByName(RoleName);
@@ -41,7 +41,7 @@ namespace HealthPlus.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("roles")]
         public IActionResult GetRoles()
         {
             var response = _userService.GetRoles();
@@ -49,7 +49,7 @@ namespace HealthPlus.Controllers
             return (response != null) ? Ok(response) : BadRequest(response);
         }
 
-        [HttpGet("{UserId}")]
+        [HttpGet("UserId")]
         public IActionResult GetUserById([FromQuery] int UserId)
         {
             var response = _userService.GetUserById(UserId);
@@ -58,10 +58,10 @@ namespace HealthPlus.Controllers
         }
 
 
-        [HttpGet("{name}")]
-        public IActionResult GetUserByName([FromQuery] string name)
+        [HttpGet("email")]
+        public IActionResult GetUserByEmail([FromQuery] string email)
         {
-            var response = _userService.GetUserByUsername(name);
+            var response = _userService.GetUserByUsername(email);
 
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
@@ -71,7 +71,7 @@ namespace HealthPlus.Controllers
         //{
         //    var response = _userService.GetUsers();
 
-        //    return (response != null) ? Ok(response) : BadRequest(response);
+        //    return Ok(response);
         //}
     }
 }
