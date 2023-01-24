@@ -3,6 +3,7 @@ using HealthPlus.Application.Interfaces.Services;
 using HealthPlus.Application.Services;
 using HealthPlus.Infrastructure.Perisstence.Repositories;
 using HealthPlus.Infrastructure.Persistence.Context;
+using HealthPlus.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

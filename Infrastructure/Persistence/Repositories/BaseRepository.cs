@@ -1,5 +1,7 @@
 ﻿using HealthPlus.Application.Interfaces.Repositories;
+using HealthPlus.Domain.Entities;
 using HealthPlus.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace HealthPlus.Infrastructure.Perisstence.Repositories
@@ -43,5 +45,16 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             _context.Set<T>().Update(entity);
             return entity;
         }
+
+        public Patient GetPatient(Expression<Func<Patient, bool>> expression)
+        {
+            return _context.Patients.Include(x => x.User).SingleOrDefault(expression);
+        }
+
+        public IList<Patient> GetAllPatient(Expression<Func<Patient, bool>> expression = null)
+        {
+            return _context.Patients.Include(x => x.User).ToList();
+        }
+
     }
 }
