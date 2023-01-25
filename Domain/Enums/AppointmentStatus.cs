@@ -5,6 +5,7 @@
         Initialized = 1,
         Approved,
         Rejected,
-        Done
+        Done,
+        Cancelled
     }
 }

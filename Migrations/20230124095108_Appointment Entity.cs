@@ -23,11 +23,11 @@ namespace HealthPlus.Migrations
                     DoctorId = table.Column<int>(type: "int", nullable: true),
                     AppointmentStatus = table.Column<int>(type: "int", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    IsPaid = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsAssigned = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsPaid = table.Column<bool>(type: "tinyint(0)", nullable: false),
+                    IsAssigned = table.Column<bool>(type: "tinyint(0)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(0)", nullable: true),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ModifiedBy = table.Column<string>(type: "longtext", nullable: true)

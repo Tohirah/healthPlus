@@ -11,6 +11,8 @@ namespace HealthPlus.Application.Interfaces.Repositories
         T Get<T>(Expression<Func<T, bool>> expression) where T : class, new();
         IList<T> GetAll<T>(Expression<Func<T, bool>> expression = null) where T : class, new();
         Patient GetPatient(Expression<Func<Patient, bool>> expression);
+        //Appointment GetAppointment(Expression<Func<Appointment, bool>> expression);
+
         IList<Patient> GetAllPatient(Expression<Func<Patient, bool>> expression = null);
         int SaveChanges();
     }

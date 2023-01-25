@@ -3,7 +3,6 @@ using HealthPlus.Application.Interfaces.Services;
 using HealthPlus.Application.Services;
 using HealthPlus.Infrastructure.Perisstence.Repositories;
 using HealthPlus.Infrastructure.Persistence.Context;
-using HealthPlus.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +19,8 @@ builder.Services.AddScoped<IRepository, BaseRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 var app = builder.Build();
 
 

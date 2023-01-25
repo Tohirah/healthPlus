@@ -27,7 +27,7 @@ namespace HealthPlus.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult getpatientbyid([FromQuery] int id)
+        public IActionResult Getpatientbyid([FromQuery] int id)
         {
             var response = _patientService.GetPatientById(id);
 

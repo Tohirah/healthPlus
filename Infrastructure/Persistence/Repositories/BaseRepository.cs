@@ -2,6 +2,7 @@
 using HealthPlus.Domain.Entities;
 using HealthPlus.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace HealthPlus.Infrastructure.Perisstence.Repositories
@@ -55,6 +56,11 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
         {
             return _context.Patients.Include(x => x.User).ToList();
         }
+
+        //public Appointment GetAppointment(Expression<Func<Appointment, bool>> expression)
+        //{
+        //    return _context.Appointments.SingleOrDefault(expression);
+        //}
 
     }
 }
