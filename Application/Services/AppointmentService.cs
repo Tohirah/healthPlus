@@ -14,6 +14,7 @@ namespace HealthPlus.Application.Services
         {
             _repository = repository;
         }
+
         public BaseResponse BookAppointment(CreateAppointmentRequestModel request)
         {
             //var cost = _repository.Get<Service>(x => x.Id == id);
@@ -25,9 +26,9 @@ namespace HealthPlus.Application.Services
                 Reason = request.Reason
             };
 
-            if(request.DoctorId < 1)
+            if (request.DoctorId < 1)
             {
-                appointment.IsAssigned= false;
+                appointment.IsAssigned = false;
             }
             else
             {
@@ -37,11 +38,7 @@ namespace HealthPlus.Application.Services
             _repository.Add<Appointment>(appointment);
             _repository.SaveChanges();
 
-            return new BaseResponse
-            {
-                Message = "Appointment booked successfully",
-                Status = true
-            };
+            return new BaseResponse { Message = "Appointment booked successfully", Status = true };
         }
 
         public BaseResponse UpdateAppointmentStatus(int id, AppointmentStatus appointmentStatus)
@@ -49,9 +46,9 @@ namespace HealthPlus.Application.Services
             var appointment = _repository.Get<Appointment>(x => x.Id == id);
             appointment.AppointmentStatus = appointmentStatus;
 
-            var appointmentUpdate =  _repository.Update<Appointment>(appointment);
+            var appointmentUpdate = _repository.Update<Appointment>(appointment);
             _repository.SaveChanges();
-            if(appointmentUpdate == null)
+            if (appointmentUpdate == null)
             {
                 return new BaseResponse
                 {
@@ -59,12 +56,9 @@ namespace HealthPlus.Application.Services
                     Status = false
                 };
             }
-            return new BaseResponse
-            {
-                Message = "Appointment Aprroved",
-                Status = true
-            };
+            return new BaseResponse { Message = "Appointment Aprroved", Status = true };
         }
+
         public BaseResponse ApproveAppointment(int id)
         {
             var appointment = _repository.Get<Appointment>(x => x.Id == id);
@@ -81,11 +75,7 @@ namespace HealthPlus.Application.Services
                     Status = false
                 };
             }
-            return new BaseResponse
-            {
-                Message = "Appointment Aprroved",
-                Status = true
-            };
+            return new BaseResponse { Message = "Appointment Aprroved", Status = true };
         }
 
         public BaseResponse CancelAppointment(int id)
@@ -96,13 +86,8 @@ namespace HealthPlus.Application.Services
             var appointmentUpdate = _repository.Update<Appointment>(appointment);
             _repository.SaveChanges();
 
-            return new BaseResponse
-            {
-                Message = "Appointment Cancelled",
-                Status = true
-            };
+            return new BaseResponse { Message = "Appointment Cancelled", Status = true };
         }
-
 
         public BaseResponse RejectAppointment(int id)
         {
@@ -112,16 +97,12 @@ namespace HealthPlus.Application.Services
             var appointmentUpdate = _repository.Update<Appointment>(appointment);
             _repository.SaveChanges();
 
-            return new BaseResponse
-            {
-                Message = "Appointment Rejected",
-                Status = true
-            };
+            return new BaseResponse { Message = "Appointment Rejected", Status = true };
         }
+
         public AppointmentResponseModel GetAppointmentById(int id)
         {
             var appointment = _repository.Get<Appointment>(x => x.Id == id);
-
 
             return new AppointmentResponseModel
             {
@@ -135,6 +116,52 @@ namespace HealthPlus.Application.Services
                 Reason = appointment.Reason,
                 Status = true
             };
+        }
+
+        public BaseResponse PayForAppointment(int id, bool isPaid)
+        {
+            var appointment = _repository.Get<Appointment>(x => x.Id == id);
+            appointment.IsPaid = true;
+
+            var appointmentUpdate = _repository.Update<Appointment>(appointment);
+            _repository.SaveChanges();
+
+            return new BaseResponse { Message = "Payment Completed", Status = true, };
+        }
+
+        public BaseResponse AssignAppointmentToDoctor(UpdateAppointmentRequestModel updateAppointmentRequestModel)
+        {
+            var appointment = new Appointment
+            {
+                PatientId = updateAppointmentRequestModel.PatientId,
+                DoctorId = updateAppointmentRequestModel.DoctorId,
+                Id = updateAppointmentRequestModel.AppointmentId
+            };
+
+            if (updateAppointmentRequestModel.DoctorId < 1)
+            {
+                appointment.IsAssigned = false;
+            }
+            else
+            {
+                appointment.IsAssigned = true;
+            }
+
+            _repository.Add<Appointment>(appointment);
+            _repository.SaveChanges();
+
+            return new BaseResponse { Message = "Doctor Assigned Successfully", Status = true };
+        }
+
+        public BaseResponse FulfillAppointment(int id)
+        {
+            var appointment = _repository.Get<Appointment>(x => x.Id == id);
+            appointment.AppointmentStatus = (AppointmentStatus)4;
+
+            var appointmentUpdate = _repository.Update<Appointment>(appointment);
+            _repository.SaveChanges();
+
+            return new BaseResponse { Message = "Appointment Fulfilled", Status = true };
         }
     }
 }

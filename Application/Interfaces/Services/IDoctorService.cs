@@ -9,7 +9,5 @@ namespace HealthPlus.Application.Interfaces.Services
         DoctorResponseModel GetDoctorByDoctorNumber(string doctorNumber);
         BaseResponse UpdateDoctor(UpdateDoctorRequestModel request);
         //public IList<DoctorResponseModel> GetDoctors()
-
-
     }
 }
