@@ -9,8 +9,9 @@ namespace HealthPlus.Application.Interfaces.Services
         RoleResponseModel GetRoleById(int id);
         IList<RoleResponseModel> GetRoles();
         RoleResponseModel GetRoleByName(string name);
-        public UserResponseModel GetUserById(int id);
-        public UserResponseModel GetUserByUsername(string name);
-        public IList<UserResponseModel> GetUsers();
+        UserResponseModel GetUserById(int id);
+        UserResponseModel GetUserByUsername(string name);
+        BaseResponse UpdatePassword(int id, UpdatePasswordRequestModel password);
+        IList<UserResponseModel> GetUsers();
     }
 }

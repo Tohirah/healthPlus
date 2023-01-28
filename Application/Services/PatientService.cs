@@ -88,13 +88,65 @@ namespace HealthPlus.Application.Services
 
         }
         
+        public BaseResponse UpdatePassword(int id, UpdatePasswordRequestModel password)
+        {
+            var patient = _repository.GetPatient(x => x.Id == id);
+            if(password.Password != null)
+            {
+                if(password.Password == password.ConfirmPassword)
+                {
+                    patient.User.Password = password.Password;
+                }
+                else
+                {
+                    return new BaseResponse
+                    {
+                        Message = "Passwords do not match",
+                        Status = false
+                    };
+                }
+            }
+            else
+            {
+                return new BaseResponse
+                {
+                    Message = "Password is empty. Enter Password",
+                    Status = false
+                };
+            }
+            
+            var patientUpdate = _repository.Update(patient);
+            _repository.SaveChanges();
+
+            if(patientUpdate == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Unable to update password",
+                    Status = false
+                };
+            }
+            return new BaseResponse
+            {
+                Message = "Password changed succssfully",
+                Status = true
+            };            
+        }
+        
 
         public PatientResponseModel GetPatientById(int id)
         {
 
             var patient = _repository.GetPatient(x => x.Id == id);
 
-
+            if(patient == null)
+            {
+                return new PatientResponseModel
+                {
+                    Message = $"No record flund with patient Id {id}",
+                    Status = false
+                };
+            }
             return new PatientResponseModel
             {
                 PatientNumber = patient.PatientNumber,
@@ -119,6 +171,14 @@ namespace HealthPlus.Application.Services
             var patient = _repository.GetPatient(x => x.PatientNumber == patientNumber);
 
 
+            if (patient == null)
+            {
+                return new PatientResponseModel
+                {
+                    Message = $"No record flund with patient Id {patientNumber}",
+                    Status = false
+                };
+            }
             return new PatientResponseModel
             {
                 FirstName = patient.User.FirstName,

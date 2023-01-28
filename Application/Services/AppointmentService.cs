@@ -16,22 +16,23 @@ namespace HealthPlus.Application.Services
         }
         public BaseResponse BookAppointment(CreateAppointmentRequestModel request)
         {
-            //var cost = _repository.Get<Service>(x => x.Id == id);
+            var hospitalService = _repository.Get<HospitalService>(x => x.ServiceName == "Consultation");
             var appointment = new Appointment
             {
                 PatientId = request.PatientId,
                 DoctorId = request.DoctorId,
                 AppointmentDate = request.AppointmentDate,
-                Reason = request.Reason
+                Reason = request.Reason,
+                Cost = hospitalService.Price
             };
 
-            if(request.DoctorId < 1)
+            if(request.DoctorId > 0)
             {
-                appointment.IsAssigned= false;
+                appointment.IsAssigned= true;
             }
             else
             {
-                appointment.IsAssigned = true;
+                appointment.IsAssigned = false;
             }
 
             _repository.Add<Appointment>(appointment);
@@ -44,10 +45,12 @@ namespace HealthPlus.Application.Services
             };
         }
 
-        public BaseResponse UpdateAppointmentStatus(int id, AppointmentStatus appointmentStatus)
+        public BaseResponse UpdateAppointment(int id, UpdateAppointmentRequestModel request)
         {
             var appointment = _repository.Get<Appointment>(x => x.Id == id);
-            appointment.AppointmentStatus = appointmentStatus;
+            appointment.AppointmentDate = request.AppointmentDate;
+            appointment.DoctorId = request.DoctorId;
+            appointment.IsAssigned = request.IsAssigned;
 
             var appointmentUpdate =  _repository.Update<Appointment>(appointment);
             _repository.SaveChanges();
@@ -91,7 +94,19 @@ namespace HealthPlus.Application.Services
         public BaseResponse CancelAppointment(int id)
         {
             var appointment = _repository.Get<Appointment>(x => x.Id == id);
-            appointment.AppointmentStatus = (AppointmentStatus)5;
+            if(appointment.AppointmentStatus == (AppointmentStatus) 1)
+            {
+                appointment.AppointmentStatus = (AppointmentStatus)5;
+            }
+            else
+            {
+
+                return new BaseResponse
+                {
+                    Message = "Appointment cancellation is waiting for approval",
+                    Status = false
+                };
+            }
 
             var appointmentUpdate = _repository.Update<Appointment>(appointment);
             _repository.SaveChanges();

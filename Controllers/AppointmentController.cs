@@ -27,15 +27,15 @@ namespace HealthPlus.Controllers
         }
 
         [HttpPut("id")]
-        public IActionResult ApproveAppointment([FromQuery] int id, AppointmentStatus appointmentStatus)
+        public IActionResult ApproveAppointment([FromQuery] int id)
         {
-            var response = _appointmentService.UpdateAppointmentStatus(id, appointmentStatus);
+            var response = _appointmentService.ApproveAppointment(id);
 
             return response.Status ? Ok(response) : BadRequest();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetAppointmentByid([FromQuery] int id)
+        [HttpGet("id")]
+        public IActionResult GetAppointmentById([FromQuery] int id)
         {
             var response = _appointmentService.GetAppointmentById(id);
 

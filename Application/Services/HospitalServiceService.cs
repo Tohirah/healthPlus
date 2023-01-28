@@ -5,20 +5,20 @@ using HealthPlus.Domain.Entities;
 
 namespace HealthPlus.Application.Services
 {
-    public class ServiceService : IServiceService
+    public class HospitalServiceService : IHospitalServiceService
     {
         private readonly IRepository _repository;
 
-        public ServiceService(IRepository repository)
+        public HospitalServiceService(IRepository repository)
         {
             _repository = repository;
         }
-        public BaseResponse CreateService(CreateServiceRequestModel request)
+        public BaseResponse CreateService(CreateHospitalServiceRequestModel request)
         {
-            var service = new Service
+            var service = new HospitalService
             {
                 ServiceName = request.ServiceName,
-                Cost = request.Cost,
+                Price = request.Price,
             };
 
            _repository.Add(service);
@@ -31,7 +31,7 @@ namespace HealthPlus.Application.Services
             };
         }
 
-        public BaseResponse UpdateService(UpdateServiceRequestModel request)
+        public BaseResponse UpdateService(UpdateHospitalServiceRequestModel request)
         {
             throw new NotImplementedException();
         }

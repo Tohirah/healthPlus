@@ -3,6 +3,7 @@ using System;
 using HealthPlus.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthPlus.Migrations
 {
     [DbContext(typeof(HealthPlusContext))]
-    partial class HealthPlusContextModelSnapshot : ModelSnapshot
+    [Migration("20230126163015_hospital service renamed")]
+    partial class hospitalservicerenamed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,45 +71,6 @@ namespace HealthPlus.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("HealthPlus.Domain.Entities.Consultation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BloodPressure")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Diagnosis")
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("MedicalRecordId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OxygenLevel")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("SUgarLevel")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Temperature")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Weight")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
-
-                    b.HasIndex("MedicalRecordId");
-
-                    b.ToTable("Consultations");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Doctor", b =>
@@ -177,27 +140,6 @@ namespace HealthPlus.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalServices");
-                });
-
-            modelBuilder.Entity("HealthPlus.Domain.Entities.MedicalRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ConsultationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConsultationId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("MedicalRecords");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Patient", b =>
@@ -381,21 +323,6 @@ namespace HealthPlus.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("HealthPlus.Domain.Entities.Consultation", b =>
-                {
-                    b.HasOne("HealthPlus.Domain.Entities.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", null)
-                        .WithMany("Consultations")
-                        .HasForeignKey("MedicalRecordId");
-
-                    b.Navigation("Appointment");
-                });
-
             modelBuilder.Entity("HealthPlus.Domain.Entities.Doctor", b =>
                 {
                     b.HasOne("HealthPlus.Domain.Entities.User", "User")
@@ -405,23 +332,6 @@ namespace HealthPlus.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HealthPlus.Domain.Entities.MedicalRecord", b =>
-                {
-                    b.HasOne("HealthPlus.Domain.Entities.Consultation", "Consultation")
-                        .WithMany()
-                        .HasForeignKey("ConsultationId");
-
-                    b.HasOne("HealthPlus.Domain.Entities.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Consultation");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Patient", b =>
@@ -452,11 +362,6 @@ namespace HealthPlus.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HealthPlus.Domain.Entities.MedicalRecord", b =>
-                {
-                    b.Navigation("Consultations");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Role", b =>

@@ -53,8 +53,7 @@ namespace HealthPlus.Application.Services
 
         public DoctorResponseModel GetDoctorById(int id)
         {
-            var doctor = _doctorRepository.Get<Doctor>(x => x.Id == id);
-            var user = _doctorRepository.Get<User>(x => x.Id == id);
+            var doctor = _doctorRepository.GetDoctor(x => x.Id == id);
 
             if (doctor == null)
             {
@@ -67,22 +66,21 @@ namespace HealthPlus.Application.Services
             }
             return new DoctorResponseModel
             {
-                FirstName = user.FirstName,
+                FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                Address = user.Address,
+                LastName = doctor.User.LastName,
+                Gender = doctor.User.Gender,
+                Address = doctor.User.Address,
                 DateOfBirth = doctor.DateOfBirth,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
+                Email = doctor.User.Email,
+                PhoneNumber = doctor.User.PhoneNumber,
                 Status = true
             };
         }
 
         public DoctorResponseModel GetDoctorByDoctorNumber (string doctorNumber)
         {
-            var doctor = _doctorRepository.Get<Doctor>(x=> x.DoctorNumber == doctorNumber);
-            var user = _doctorRepository.Get<User>(x => x.Id == doctor.Id);
+            var doctor = _doctorRepository.GetDoctor(x=> x.DoctorNumber == doctorNumber);
             if(doctor == null)
             {
                 return new DoctorResponseModel
@@ -94,40 +92,29 @@ namespace HealthPlus.Application.Services
 
             return new DoctorResponseModel
             {
+                FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                Address = user.Address,
-                PhoneNumber = user.PhoneNumber,
-                Email = user.Email,
+                LastName = doctor.User.LastName,
+                Gender = doctor.User.Gender,
+                Address = doctor.User.Address,
                 DateOfBirth = doctor.DateOfBirth,
+                Email = doctor.User.Email,
+                PhoneNumber = doctor.User.PhoneNumber,
                 Status = true
             };
         }
 
-        public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
+        public BaseResponse UpdateDoctor(int id, UpdateDoctorRequestModel request)
         {
-            var doctorModel = new Doctor
-            {
-                DateOfBirth = request.DateOfBirth
-            };
+            var doctor = _doctorRepository.GetDoctor(x => x.Id == id);
 
-            var userModel = new User
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                Password = request.Password,
-                Address = request.Address
-            };
+            doctor.User.PhoneNumber = request.PhoneNumber;
+            doctor.User.Address = request.Address;
 
-            var doctor = _doctorRepository.Update<Doctor>(doctorModel);
-            var user = _doctorRepository.Update<User>(userModel);
+            var user = _doctorRepository.Update<User>(doctor.User);
             _doctorRepository.SaveChanges();
 
-            if(doctorModel == null || userModel == null)
+            if(user == null)
             {
                 return new BaseResponse
                 { 
@@ -142,27 +129,76 @@ namespace HealthPlus.Application.Services
             };
         }
 
+        public BaseResponse UpdatePassword(int id, UpdatePasswordRequestModel password)
+        {
+            var doctor = _doctorRepository.GetDoctor(x => x.Id == id);
 
-        // How to map responsemodel using both doctor and user entities
-        //public IList<DoctorResponseModel> GetDoctors()
-        //{
-        //    var doctors = _doctorRepository.GetAll<Doctor>();
-        //    var users = _doctorRepository.GetAll<User>();
+            if (password.Password != null)
+            {
+                if (password.Password == password.ConfirmPassword)
+                {
+                    doctor.User.Password = password.Password;
+                }
+                else
+                {
+                    return new BaseResponse
+                    {
+                        Message = "Passwords do not match",
+                        Status = false
+                    };
+                }
+            }
+            else
+            {
+                return new BaseResponse
+                {
+                    Message = "Password is empty. Enter Password",
+                    Status = false
+                };
+            }
+
+            var user = _doctorRepository.Update<Doctor>(doctor);
+            _doctorRepository.SaveChanges();
+
+            if(user == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Unable to update password",
+                    Status = false
+                };
+            }
+            return new BaseResponse
+            {
+                Message = "Password updated successfully",
+                Status = true
+            };
+        }
 
 
-        //    var doctorResponse= users.Select(x => new DoctorResponseModel
-        //    {
-        //        FirstName = x.FirstName,
-        //        LastName = x.LastName,
-        //        Gender = x.Gender,
-        //        Address = x.Address,
-        //        PhoneNumber = x.PhoneNumber,
-        //        Password = x.Password,
-        //        Email = x.Email,
-        //    }).ToList();
+        public IList<DoctorResponseModel> GetDoctors()
+        {
+            var doctors = _doctorRepository.GetAllDoctors();
 
-        //    return doctorResponse;
-        //}
 
+            var doctorResponse = doctors.Select(x => new DoctorResponseModel
+            {
+                DoctorNumber = x.DoctorNumber,
+                FirstName = x.User.FirstName,
+                LastName = x.User.LastName,
+                Gender = x.User.Gender,
+                Address = x.User.Address,
+                Email = x.User.Email,
+                DateOfBirth = x.DateOfBirth,
+                PhoneNumber= x.User.PhoneNumber
+            }).ToList();
+
+            return doctorResponse;
+        }
+
+        public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

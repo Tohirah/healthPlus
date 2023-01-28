@@ -31,7 +31,7 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             return _context.Set<T>().SingleOrDefault(expression);
         }
 
-        public IList<T> GetAll<T> (Expression<Func<T, bool>>? expression = null) where T : class, new()
+        public IList<T> GetAll<T> (Expression<Func<T, bool>> expression = null) where T : class, new()
         {
             return _context.Set<T>().ToList();
         }
@@ -57,10 +57,35 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             return _context.Patients.Include(x => x.User).ToList();
         }
 
-        //public Appointment GetAppointment(Expression<Func<Appointment, bool>> expression)
-        //{
-        //    return _context.Appointments.SingleOrDefault(expression);
-        //}
+        public Doctor GetDoctor(Expression<Func<Doctor, bool>> expresssion)
+        {
+            return _context.Doctors.Include(x => x.User).SingleOrDefault(expresssion);
+        }
 
+        public IList<Doctor> GetAllDoctors(Expression<Func<Doctor, bool>> expression = null)
+        {
+            return _context.Doctors.Include(x => x.User).ToList();
+        }
+
+        public MedicalRecord GetMedicalRecord(Expression<Func<MedicalRecord, bool>> expression)
+        {
+            return _context.MedicalRecords.SingleOrDefault(expression);
+        }
+
+        public IList<MedicalRecord> GetAllMedicalRecords(Expression<Func<MedicalRecord, bool>> expression = null)
+        {
+            return _context.MedicalRecords.ToList();
+
+        }
+
+        public Consultation GetConsultation(Expression<Func<Consultation, bool>> expression)
+        {
+            return _context.Consultations.Include(x => x.Appointment).SingleOrDefault(expression);
+        }
+
+        public IList<Consultation> GetAllConsultation(Expression<Func<Consultation, bool>> expression = null)
+        {
+            return _context.Consultations.Include(x => x.Appointment).ToList();
+        }
     }
 }

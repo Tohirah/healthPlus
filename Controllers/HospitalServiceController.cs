@@ -7,16 +7,16 @@ namespace HealthPlus.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServiceController : ControllerBase
+    public class HospitalServiceController : ControllerBase
     {
-        private readonly IServiceService _serviceService;
+        private readonly IHospitalServiceService _serviceService;
 
-        public ServiceController(IServiceService serviceService)
+        public HospitalServiceController(IHospitalServiceService serviceService)
         {
             _serviceService = serviceService;
         }
         [HttpPost]
-        public IActionResult CreateService([FromBody] CreateServiceRequestModel request)
+        public IActionResult CreateService([FromBody] CreateHospitalServiceRequestModel request)
         {
             var response = _serviceService.CreateService(request);
 

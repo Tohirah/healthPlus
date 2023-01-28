@@ -1,6 +1,6 @@
-﻿namespace HealthPlus.Domain.Entities
+﻿namespace HealthPlus.Application.DTOs
 {
-    public class Service : BaseEntity
+    public class UpdateHospitalServiceRequestModel
     {
         public string ServiceName { get; set; }
         public decimal Cost { get; set; }

@@ -131,7 +131,6 @@ namespace HealthPlus.Application.Services
                 PhoneNumber = user.PhoneNumber,
                 Password = user.Password,
                 Status = true
-
             };
 
         }
@@ -152,6 +151,52 @@ namespace HealthPlus.Application.Services
             }).ToList();
 
             return userResponse;
+        }
+
+        public BaseResponse UpdatePassword(int id, UpdatePasswordRequestModel password)
+        {
+            var user = _repository.Get<User>(x => x.Id == id);
+
+            if (password.Password != null)
+            {
+                if (password.Password == password.ConfirmPassword)
+                {
+                    user.Password = password.Password;
+                }
+                else
+                {
+                    return new BaseResponse
+                    {
+                        Message = "Passwords do not match",
+                        Status = false
+                    };
+                }
+            }
+            else
+            {
+                return new BaseResponse
+                {
+                    Message = "Password is empty. Enter Password",
+                    Status = false
+                };
+            }
+
+            var userUpdate = _repository.Update<User>(user);
+            _repository.SaveChanges();
+
+            if (user == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Unable to update password",
+                    Status = false
+                };
+            }
+            return new BaseResponse
+            {
+                Message = "Password updated successfully",
+                Status = true
+            };
         }
     }
 }
