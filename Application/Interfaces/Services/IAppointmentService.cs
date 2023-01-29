@@ -10,6 +10,9 @@ namespace HealthPlus.Application.Interfaces.Services
         BaseResponse ApproveAppointment(int id);
         BaseResponse RejectAppointment(int id);
         BaseResponse CancelAppointment(int id);
+        BaseResponse PayForAppointment(int id);
+        BaseResponse AssignAppointmentToDoctor(int id, UpdateAppointmentRequestModel request);
+        BaseResponse FulfillAppointment(int id);
         AppointmentResponseModel GetAppointmentById(int id);
 
     }

@@ -151,5 +151,52 @@ namespace HealthPlus.Application.Services
                 Status = true
             };
         }
+
+        public BaseResponse PayForAppointment(int id)
+        {
+            var appointment = _repository.Get<Appointment>(x => x.Id == id);
+            appointment.IsPaid = true;
+
+            _repository.Update(appointment);
+            _repository.SaveChanges();
+
+            return new BaseResponse
+            {
+                Message = "Appointment updated successfully",
+                Status = true
+            };
+        }
+
+        public BaseResponse AssignAppointmentToDoctor(int id, UpdateAppointmentRequestModel request)
+        {
+            var appointment = _repository.Get<Appointment>(x => x.Id == id);
+            appointment.DoctorId = request.DoctorId;
+            appointment.IsAssigned = true;
+
+            _repository.Update(appointment);
+            _repository.SaveChanges();
+
+            return new BaseResponse
+            {
+                Message = "Appointment updated successfully",
+                Status = true
+            };
+        }
+
+        public BaseResponse FulfillAppointment(int id)
+        {
+
+            var appointment = _repository.Get<Appointment>(x => x.Id == id);
+            appointment.AppointmentStatus = (AppointmentStatus)4;
+
+            _repository.Update(appointment);
+            _repository.SaveChanges();
+
+            return new BaseResponse
+            {
+                Message = "Appointment updated successfully",
+                Status = true
+            };
+        }
     }
 }

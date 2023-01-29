@@ -10,6 +10,5 @@ namespace HealthPlus.Application.Interfaces.Services
         public PatientResponseModel GetPatientById(int id);
         public PatientResponseModel GetPatientByPatientNumber(string patientNumber);
         public IList<PatientResponseModel> GetPatients();
-        //public PatientResponseModel LogIn(string email, string password);
     }
 }
