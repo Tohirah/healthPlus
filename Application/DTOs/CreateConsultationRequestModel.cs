@@ -11,6 +11,7 @@ namespace HealthPlus.Application.DTOs
         public string BloodPressure { get; set; }
         public string OxygenLevel { get; set; }
         public string SugarLevel { get; set; }
+        public string Complaints { get; set; }
         public string Diagnosis { get; set; }
         public int AppointmentId { get; set; }
     }

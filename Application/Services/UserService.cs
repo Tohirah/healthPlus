@@ -184,7 +184,7 @@ namespace HealthPlus.Application.Services
             var userUpdate = _repository.Update<User>(user);
             _repository.SaveChanges();
 
-            if (user == null)
+            if (userUpdate == null)
             {
                 return new BaseResponse
                 {
@@ -197,6 +197,16 @@ namespace HealthPlus.Application.Services
                 Message = "Password updated successfully",
                 Status = true
             };
+        }
+
+        public UserResponseModel LogIn(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BaseResponse Login(string email, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

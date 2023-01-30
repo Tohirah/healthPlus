@@ -4,7 +4,6 @@ namespace HealthPlus.Application.DTOs
 {
     public class CreateMedicalRecordRequestModel
     {
-        public int Id { get; set; }
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
         public List<Consultation> Consultations { get; set; }

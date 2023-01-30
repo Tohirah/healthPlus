@@ -16,6 +16,7 @@ namespace HealthPlus.Application.Services
         public BaseResponse CreatePatient(CreatePatientRequestModel request)
         {
             var salt = Guid.NewGuid().ToString();
+            var patientNumber = $"PA{Guid.NewGuid().ToString().Substring(0, 4).Replace("-", "")}";
 
             var user = new User
             {
@@ -25,7 +26,7 @@ namespace HealthPlus.Application.Services
                 PhoneNumber = request.PhoneNumber,
                 Gender = request.Gender,
                 Address = request.Address,
-                UserName = request.Email,
+                UserName = patientNumber,
                 Salt = salt
             };
             user.Password =$"{request.Password} {salt}";
@@ -38,13 +39,15 @@ namespace HealthPlus.Application.Services
                 BloodGroup = request.BloodGroup,
                 Genotype = request.Genotype,
                 EmergencyContact = request.EmergencyContact,
-                PatientNumber = $"PA{Guid.NewGuid().ToString().Substring(0, 4).Replace("-", "")}",
+                PatientNumber = patientNumber,
                 DateOfBirth = request.DateOfBirth,
                 UserId = user.Id,
                 User = user,
             };
 
             _repository.Add<Patient>(patient);
+            //_repository.Add<MedicalRecord>(patient.Id);
+
             _repository.SaveChanges();
 
             return new BaseResponse

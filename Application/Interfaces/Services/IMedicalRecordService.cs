@@ -5,8 +5,13 @@ namespace HealthPlus.Application.Interfaces.Services
 {
     public interface IMedicalRecordService
     {
-        BaseResponse CreateMedicalRecord(CreateMedicalRecordRequestModel request);
-        BaseResponse UpdateMedicalRecord(int id, Consultation consultation);
-        MedicalRecordResponseModel GetMedicalRecord(int id);
+        BaseResponse CreateConsultation(CreateConsultationRequestModel request);
+        ConsultationResponseModel GetConsultationByAppointmentId(int appointmentId);
+        IList<ConsultationResponseModel> GetConsultationByDate(DateTime appointmentDate);
+        IList<ConsultationResponseModel> GetConsultationByPatientId(int patientId);
+        BaseResponse UpdateDiagnosis(int appointmentId, string diagnosis);
+        BaseResponse CreateMedicalRecord(int patientId);
+        BaseResponse AddConsultation(int id, CreateConsultationRequestModel request);
+        MedicalRecordResponseModel GetMedicalRecordbyPatientId(int id);
     }
 }
