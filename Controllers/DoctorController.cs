@@ -29,8 +29,8 @@ namespace HealthPlus.Controllers
             return response.Status? Ok(response): NotFound(response.Message);
         }
 
-        [HttpGet("doctorNumber")]
-        public IActionResult GetDoctorByDoctorNumber([FromQuery] string doctorNumber)
+        [HttpGet("getDoctorByDoctorNumber/{doctorNumber}")]
+        public IActionResult GetDoctorByDoctorNumber([FromRoute] string doctorNumber)
         {
             var response = _doctorService.GetDoctorByDoctorNumber(doctorNumber);
             return response.Status ? Ok(response) : NotFound(response.Message);
@@ -44,7 +44,7 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest(response);
         }
 
-        [HttpGet]
+        [HttpGet("getDoctors")]
         public IActionResult GetDoctors()
         {
             var response = _doctorService.GetDoctors();
