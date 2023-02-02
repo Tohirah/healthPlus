@@ -19,6 +19,7 @@ namespace HealthPlus.Application.Services
             var consultation = new Consultation
             {
                 AppointmentId = request.AppointmentId,
+                Complaint = request.Complaint,
                 Diagnosis = request.Diagnosis,
                 Temperature = request.Temperature,
                 BloodPressure = request.BloodPressure,
@@ -30,7 +31,9 @@ namespace HealthPlus.Application.Services
             _repository.Add<Consultation>(consultation);
             _repository.SaveChanges();
 
-            //var record = AddConsultation(request.Ppointment.PatientId, request);
+            var appointment = _repository.Get<Appointment>(x => x.Id == request.AppointmentId);
+            var record = AddConsultation(appointment.PatientId, request);
+
             return new BaseResponse
             {
                 Message = "Consultation Record created successfully",
@@ -55,6 +58,7 @@ namespace HealthPlus.Application.Services
                 AppointmentDate = consultation.Appointment.AppointmentDate,
                 PatientId = consultation.Appointment.PatientId,
                 DoctorId = consultation.Appointment.DoctorId,
+                Complaint = consultation.Complaint,
                 Diagnosis = consultation.Diagnosis,
                 BloodPressure = consultation.BloodPressure,
                 Temperature = consultation.Temperature,
@@ -75,6 +79,7 @@ namespace HealthPlus.Application.Services
                 AppointmentDate = x.Appointment.AppointmentDate,
                 PatientId = x.Appointment.PatientId,
                 DoctorId = x.Appointment.DoctorId,
+                Complaint = x.Complaint,
                 Diagnosis = x.Diagnosis,
                 BloodPressure = x.BloodPressure,
                 Temperature = x.Temperature,
@@ -96,6 +101,7 @@ namespace HealthPlus.Application.Services
                 AppointmentDate = x.Appointment.AppointmentDate,
                 PatientId = x.Appointment.PatientId,
                 DoctorId = x.Appointment.DoctorId,
+                Complaint = x.Complaint,
                 Diagnosis = x.Diagnosis,
                 BloodPressure = x.BloodPressure,
                 Temperature = x.Temperature,
@@ -150,6 +156,7 @@ namespace HealthPlus.Application.Services
                 Weight = x.Weight,
                 SugarLevel = x.SugarLevel,
                 OxygenLevel = x.OxygenLevel,
+                Complaint = x.Complaint,
                 Diagnosis = x.Diagnosis,
                 DoctorId = x.Appointment.DoctorId,
                 Status = true
@@ -175,7 +182,7 @@ namespace HealthPlus.Application.Services
                 SugarLevel = request.SugarLevel,
                 OxygenLevel = request.OxygenLevel,
                 Diagnosis = request.Diagnosis,
-                Complaint = request.Complaints
+                Complaint = request.Complaint
             };
             medicalRecord.Consultations.Add(consultation);
 

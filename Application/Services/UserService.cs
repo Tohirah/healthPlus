@@ -206,7 +206,30 @@ namespace HealthPlus.Application.Services
 
         public BaseResponse Login(string email, string password)
         {
-            throw new NotImplementedException();
+            var user = _repository.Get<User>(x => x.Email== email);
+            if(user != null && user.Password == password)
+            {
+                return new BaseResponse
+                {
+                    Message = "Login successful",
+                    Status = true
+                };
+            }
+            else if(user != null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Incorrect Password",
+                    Status = false
+                };
+            }
+
+            return new BaseResponse
+            {
+                Message = $"User not found with email {email}",
+                Status = false
+            };
+            
         }
     }
 }

@@ -9,16 +9,16 @@ namespace HealthPlus.Controllers
     [ApiController]
     public class ConsultationController : ControllerBase
     {
-        private readonly IConsultationService _consultationService;
-        public ConsultationController (IConsultationService consultationService)
+        private readonly IMedicalRecordService _medicalRecordService;
+        public ConsultationController (IMedicalRecordService medicalRecordService)
         {
-            _consultationService = consultationService;
+            _medicalRecordService = medicalRecordService;
         }
 
         [HttpPost]
         public IActionResult CreateNewConsultation([FromBody] CreateConsultationRequestModel request)
         {
-            var response = _consultationService.CreateConsultation(request);
+            var response = _medicalRecordService.CreateConsultation(request);
 
             return response.Status? Ok(response) : BadRequest(response);
         }
@@ -26,7 +26,7 @@ namespace HealthPlus.Controllers
         [HttpGet("appointmentId")]
         public IActionResult GetConsultationByAppointmentId([FromQuery] int appointmentId)
         {
-            var response = _consultationService.GetConsultationByAppointmentId(appointmentId);
+            var response = _medicalRecordService.GetConsultationByAppointmentId(appointmentId);
 
             return response.Status ? Ok(response) : NotFound(response);
         }
@@ -34,7 +34,7 @@ namespace HealthPlus.Controllers
         [HttpPut("{appointmentId}")]
         public IActionResult UpdateDiagnosis(int appointmentId, string diagnosis)
         {
-            var response = _consultationService.UpdateDiagnosis(appointmentId, diagnosis);
+            var response = _medicalRecordService.UpdateDiagnosis(appointmentId, diagnosis);
 
             return response.Status ? Ok(response) : BadRequest(response);
         }

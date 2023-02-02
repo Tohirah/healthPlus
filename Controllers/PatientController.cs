@@ -17,7 +17,7 @@ namespace HealthPlus.Controllers
             _patientService = patientService;
         }
 
-        [HttpPost]
+        [HttpPost("CreatePatient")]
         public IActionResult CreatePatient([FromBody] CreatePatientRequestModel request)
         {
             var response = _patientService.CreatePatient(request);
