@@ -83,16 +83,34 @@ namespace HealthPlus.Migrations
                     b.Property<string>("BloodPressure")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Complaint")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Diagnosis")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("MedicalRecordId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("MedicalRecordId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("OxygenLevel")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("SUgarLevel")
+                    b.Property<string>("SugarLevel")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Temperature")
@@ -135,6 +153,9 @@ namespace HealthPlus.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProfileImage")
                         .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
@@ -185,15 +206,25 @@ namespace HealthPlus.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConsultationId")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ConsultationId");
 
                     b.HasIndex("PatientId");
 
@@ -389,11 +420,15 @@ namespace HealthPlus.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", null)
+                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", "MedicalRecord")
                         .WithMany("Consultations")
-                        .HasForeignKey("MedicalRecordId");
+                        .HasForeignKey("MedicalRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Appointment");
+
+                    b.Navigation("MedicalRecord");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Doctor", b =>
@@ -409,17 +444,11 @@ namespace HealthPlus.Migrations
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.MedicalRecord", b =>
                 {
-                    b.HasOne("HealthPlus.Domain.Entities.Consultation", "Consultation")
-                        .WithMany()
-                        .HasForeignKey("ConsultationId");
-
                     b.HasOne("HealthPlus.Domain.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Consultation");
 
                     b.Navigation("Patient");
                 });

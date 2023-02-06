@@ -10,14 +10,33 @@ namespace HealthPlus.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorService _doctorService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public DoctorController(IDoctorService doctorService)
+        public DoctorController(IDoctorService doctorService, IWebHostEnvironment webHostEnvironment)
         {
             _doctorService = doctorService;
+            _webHostEnvironment= webHostEnvironment;
         }
-        [HttpPost]
-        public IActionResult CreateDoctor([FromBody] CreateDoctorRequestModel request)
+        [HttpPost("CreateDoctor")]
+        public IActionResult CreateDoctor([FromForm] CreateDoctorRequestModel request)
         {
+            var forms = HttpContext.Request.Form;
+            if(forms.Count > 0)
+            {
+                string imageDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Images"); ;
+                foreach(var file in forms.Files)
+                {
+                    FileInfo info = new FileInfo(file.FileName);
+                    string imageName = Guid.NewGuid().ToString() + info.Extension;
+                    string path = Path.Combine(imageDirectory, imageName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    request.ProfileImage= imageName;
+
+                }
+            }
             var response = _doctorService.CreateDoctor(request);
             return response.Status? Ok(response) : BadRequest(response);
         }

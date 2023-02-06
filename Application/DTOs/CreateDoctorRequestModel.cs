@@ -12,5 +12,6 @@ namespace HealthPlus.Application.DTOs
         public string Email { get; set; }
         public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string ProfileImage { get; set; }
     }
 }
