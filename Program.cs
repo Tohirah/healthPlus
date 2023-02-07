@@ -28,10 +28,13 @@ builder.Services.AddScoped<IRepository, BaseRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IHospitalServiceService, HospitalServiceService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IConsultationService, ConsultationService> ();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 var app = builder.Build();
 
 

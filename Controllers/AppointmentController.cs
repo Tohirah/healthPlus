@@ -42,28 +42,28 @@ namespace HealthPlus.Controllers
             return (response != null) ? Ok(response) : NotFound(response);
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult PayForApointment([FromRoute] int id)
-        //{
-        //    var response = _appointmentService.PayForAppointment(id);
+        [HttpPut("PayForApointment/{id}")]
+       public IActionResult PayForApointment([FromRoute] int id)
+        {
+            var response = _appointmentService.PayForAppointment(id);
 
-        //    return response.Status? Ok(response) : BadRequest(response);
-        //}
+            return response.Status? Ok(response) : BadRequest(response);
+        }
 
-        //[HttpPut("{id}")]
-        //public IActionResult AssignAppointmentToDoctor([FromQuery] int id, UpdateAppointmentRequestModel request)
-        //{
-        //    var response = _appointmentService.AssignAppointmentToDoctor(id, request);
+        [HttpPut("AssignAppointmentToDoctor/{id}")]
+        public IActionResult AssignAppointmentToDoctor([FromQuery] int id, UpdateAppointmentRequestModel request)
+        {
+            var response = _appointmentService.AssignAppointmentToDoctor(id, request);
 
-        //    return response.Status ? Ok(response) : BadRequest(response);
-        //}
+            return response.Status ? Ok(response) : BadRequest(response);
+        }
 
-        //[HttpPut("{id}")]
-        //public IActionResult FulfillAppointment([FromQuery] int id)
-        //{
-        //    var response = _appointmentService.FulfillAppointment(id);
+        [HttpPut("FulfillAppointment/{id}")]
+        public IActionResult FulfillAppointment([FromQuery] int id)
+        {
+            var response = _appointmentService.FulfillAppointment(id);
 
-        //    return response.Status ? Ok(response) : BadRequest(response);
-        //}
+            return response.Status ? Ok(response) : BadRequest(response);
+        }
     }
 }

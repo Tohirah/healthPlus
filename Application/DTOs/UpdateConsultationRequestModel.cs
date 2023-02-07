@@ -2,7 +2,7 @@
 
 namespace HealthPlus.Application.DTOs
 {
-    public class UpdateConsultationResponseModel
+    public class UpdateConsultationRequestModel
     {
         public string Temperature { get; set; }
         public string Weight { get; set; }
