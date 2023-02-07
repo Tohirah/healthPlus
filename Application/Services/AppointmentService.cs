@@ -198,5 +198,24 @@ namespace HealthPlus.Application.Services
                 Status = true
             };
         }
+
+        public IList<AppointmentResponseModel> GetAppointments()
+        {
+            var appointments = _repository.GetAll<Appointment>().ToList();
+
+            var appointmentResponse = appointments.Select(x => new AppointmentResponseModel
+            {
+                AppointmentDate = x.AppointmentDate,
+                DoctorId = x.DoctorId,
+                PatientId = x.PatientId,
+                Reason = x.Reason,
+                IsAssigned = x.IsAssigned,
+                IsPaid = x.IsPaid,
+                AppointmentStatus = x.AppointmentStatus,
+                Cost = x.Cost
+            }).ToList();
+
+            return appointmentResponse;
+        }
     }
 }

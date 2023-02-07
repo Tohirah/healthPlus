@@ -26,7 +26,7 @@ namespace HealthPlus.Controllers
             return response.Status? Ok(response) : BadRequest(response);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("approveAppointment/{id}")]
         public IActionResult ApproveAppointment([FromRoute] int id)
         {
             var response = _appointmentService.ApproveAppointment(id);
@@ -34,7 +34,7 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest();
         }
 
-        [HttpGet("id")]
+        [HttpGet("getAppointmentById/id")]
         public IActionResult GetAppointmentById([FromQuery] int id)
         {
             var response = _appointmentService.GetAppointmentById(id);
@@ -42,7 +42,7 @@ namespace HealthPlus.Controllers
             return (response != null) ? Ok(response) : NotFound(response);
         }
 
-        [HttpPut("PayForApointment/{id}")]
+        [HttpPut("payForApointment/{id}")]
        public IActionResult PayForApointment([FromRoute] int id)
         {
             var response = _appointmentService.PayForAppointment(id);
@@ -50,7 +50,7 @@ namespace HealthPlus.Controllers
             return response.Status? Ok(response) : BadRequest(response);
         }
 
-        [HttpPut("AssignAppointmentToDoctor/{id}")]
+        [HttpPut("assignAppointmentToDoctor/{id}")]
         public IActionResult AssignAppointmentToDoctor([FromQuery] int id, UpdateAppointmentRequestModel request)
         {
             var response = _appointmentService.AssignAppointmentToDoctor(id, request);
@@ -58,12 +58,21 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest(response);
         }
 
-        [HttpPut("FulfillAppointment/{id}")]
+        [HttpPut("fulfillAppointment/{id}")]
         public IActionResult FulfillAppointment([FromQuery] int id)
         {
             var response = _appointmentService.FulfillAppointment(id);
 
             return response.Status ? Ok(response) : BadRequest(response);
         }
+
+        [HttpGet("getAppointments")]
+        public IActionResult GetAppointments()
+        {
+            var response = _appointmentService.GetAppointments();
+
+            return (response != null) ? Ok(response) : BadRequest(response) ;
+        }
+
     }
 }
