@@ -34,6 +34,14 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest();
         }
 
+        [HttpPut("rejectAppointment/{id}")]
+        public IActionResult RejectAppointment([FromRoute] int id)
+        {
+            var response = _appointmentService.RejectAppointment(id);
+
+            return response.Status ? Ok(response) : BadRequest();
+        }
+
         [HttpGet("getAppointmentById/id")]
         public IActionResult GetAppointmentById([FromQuery] int id)
         {
