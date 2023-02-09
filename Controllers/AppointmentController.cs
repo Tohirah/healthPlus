@@ -42,6 +42,14 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest();
         }
 
+        [HttpPut("cancelAppointment/{id}")]
+        public IActionResult CancelAppointment([FromRoute] int id)
+        {
+            var response = _appointmentService.CancelAppointment(id);
+
+            return response.Status ? Ok(response) : BadRequest();
+        }
+
         [HttpGet("getAppointmentById/id")]
         public IActionResult GetAppointmentById([FromQuery] int id)
         {
@@ -58,7 +66,7 @@ namespace HealthPlus.Controllers
             return response.Status? Ok(response) : BadRequest(response);
         }
 
-        [HttpPut("assignAppointmentToDoctor/{id}")]
+        [HttpPut("assignAppointmentToDoctor/id")]
         public IActionResult AssignAppointmentToDoctor([FromQuery] int id, UpdateAppointmentRequestModel request)
         {
             var response = _appointmentService.AssignAppointmentToDoctor(id, request);
@@ -66,7 +74,7 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : BadRequest(response);
         }
 
-        [HttpPut("fulfillAppointment/{id}")]
+        [HttpPut("fulfillAppointment/id")]
         public IActionResult FulfillAppointment([FromQuery] int id)
         {
             var response = _appointmentService.FulfillAppointment(id);

@@ -69,5 +69,12 @@ namespace HealthPlus.Controllers
             var response = _doctorService.GetDoctors();
             return (response != null) ? Ok(response) : BadRequest(response);
         }
+
+        [HttpDelete("deleteDoctor/id")]
+        public IActionResult DeleteDoctor([FromRoute] int id)
+        {
+            var response = _doctorService.DeleteDoctor(id);
+            return response.Status ? Ok(response) : BadRequest(response);
+        }
     }
 }

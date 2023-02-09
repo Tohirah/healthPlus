@@ -35,6 +35,7 @@ builder.Services.AddScoped<IConsultationService, ConsultationService> ();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<INurseService, NurseService>();
 var app = builder.Build();
 
 

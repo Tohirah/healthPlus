@@ -32,7 +32,7 @@ namespace HealthPlus.Application.Services
             };
             user.Password = $"{request.Password} {salt}";
 
-            _doctorRepository.Add(user);
+            _doctorRepository.Add<User>(user);
 
             var doctor = new Doctor
             {
@@ -43,7 +43,7 @@ namespace HealthPlus.Application.Services
                 ProfileImage = request.ProfileImage,
             };
 
-            _doctorRepository.Add(doctor);
+            _doctorRepository.Add<Doctor>(doctor);
             _doctorRepository.SaveChanges();
 
             return new BaseResponse
@@ -204,6 +204,22 @@ namespace HealthPlus.Application.Services
         public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
         {
             throw new NotImplementedException();
+        }
+
+        public BaseResponse DeleteDoctor(int id)
+        {
+            var doctor = _doctorRepository.GetDoctor(x => x.Id == id);
+
+            _doctorRepository.Delete<Doctor>(doctor);
+            _doctorRepository.Delete<User>(doctor.User);
+
+            _doctorRepository.SaveChanges();
+
+            return new BaseResponse
+            {
+                Message = "Profie deleted sucessfully",
+                Status = true
+            };
         }
     }
 }

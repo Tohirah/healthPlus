@@ -104,7 +104,7 @@ namespace HealthPlus.Application.Services
                 return new BaseResponse
                 {
                     Message = "Appointment cancellation is waiting for approval",
-                    Status = false
+                    Status = true
                 };
             }
 
@@ -205,6 +205,7 @@ namespace HealthPlus.Application.Services
 
             var appointmentResponse = appointments.Select(x => new AppointmentResponseModel
             {
+                Id= x.Id,
                 AppointmentDate = x.AppointmentDate,
                 DoctorId = x.DoctorId,
                 PatientId = x.PatientId,
