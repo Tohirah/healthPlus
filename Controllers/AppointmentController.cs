@@ -18,7 +18,7 @@ namespace HealthPlus.Controllers
             _appointmentService = appointmentService;
         }
 
-        [HttpPost]
+        [HttpPost("CreateAppointment")]
         public IActionResult BookAppointment([FromBody] CreateAppointmentRequestModel request)
         {
             var response = _appointmentService.BookAppointment(request);

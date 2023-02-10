@@ -74,7 +74,7 @@ namespace HealthPlus.Controllers
         //    return Ok(response);
         //}
 
-        [HttpGet("{email}")]
+        [HttpGet("Login/{email}")]
         public IActionResult Login([FromRoute] string email, string password)
         {
             var response = _userService.Login(email, password);

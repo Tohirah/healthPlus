@@ -19,7 +19,7 @@ namespace HealthPlus.Application.Services
             var hospitalService = _repository.Get<HospitalService>(x => x.ServiceName == "Consultation");
             var appointment = new Appointment
             {
-                PatientId = request.PatientId,
+                // PatientId = request.PatientId,
                 DoctorId = request.DoctorId,
                 AppointmentDate = request.AppointmentDate,
                 Reason = request.Reason,

@@ -13,7 +13,7 @@ namespace HealthPlus.Application.Interfaces.Services
         UserResponseModel GetUserByUsername(string name);
         BaseResponse UpdatePassword(int id, UpdatePasswordRequestModel password);
         IList<UserResponseModel> GetUsers();
-        UserResponseModel LogIn(string email, string password);
+        // UserResponseModel LogIn(string email, string password);
         BaseResponse Login(string email, string password);
 
     }

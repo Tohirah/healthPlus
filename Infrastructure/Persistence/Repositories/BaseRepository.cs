@@ -28,7 +28,7 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
         }
         public T Get<T> (Expression<Func<T, bool>> expression) where T : class, new()
         {
-            return _context.Set<T>().SingleOrDefault(expression);
+            return _context.Set<T>().FirstOrDefault(expression);
         }
 
         public IList<T> GetAll<T> (Expression<Func<T, bool>> expression = null) where T : class, new()
