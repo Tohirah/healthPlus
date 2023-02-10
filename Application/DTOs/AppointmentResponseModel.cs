@@ -4,6 +4,7 @@ namespace HealthPlus.Application.DTOs
 {
     public class AppointmentResponseModel : BaseResponse
     {
+        public int Id { get; set; }
         public DateTime AppointmentDate { get; set; }
         public string Reason { get; set; }
         public int PatientId { get; set; }

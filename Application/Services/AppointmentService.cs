@@ -104,7 +104,7 @@ namespace HealthPlus.Application.Services
                 return new BaseResponse
                 {
                     Message = "Appointment cancellation is waiting for approval",
-                    Status = false
+                    Status = true
                 };
             }
 
@@ -197,6 +197,26 @@ namespace HealthPlus.Application.Services
                 Message = "Appointment updated successfully",
                 Status = true
             };
+        }
+
+        public IList<AppointmentResponseModel> GetAppointments()
+        {
+            var appointments = _repository.GetAll<Appointment>().ToList();
+
+            var appointmentResponse = appointments.Select(x => new AppointmentResponseModel
+            {
+                Id= x.Id,
+                AppointmentDate = x.AppointmentDate,
+                DoctorId = x.DoctorId,
+                PatientId = x.PatientId,
+                Reason = x.Reason,
+                IsAssigned = x.IsAssigned,
+                IsPaid = x.IsPaid,
+                AppointmentStatus = x.AppointmentStatus,
+                Cost = x.Cost
+            }).ToList();
+
+            return appointmentResponse;
         }
     }
 }

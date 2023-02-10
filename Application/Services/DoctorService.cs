@@ -2,6 +2,7 @@
 using HealthPlus.Application.Interfaces.Repositories;
 using HealthPlus.Application.Interfaces.Services;
 using HealthPlus.Domain.Entities;
+using System.Numerics;
 
 namespace HealthPlus.Application.Services
 {
@@ -31,7 +32,7 @@ namespace HealthPlus.Application.Services
             };
             user.Password = $"{request.Password} {salt}";
 
-            _doctorRepository.Add(user);
+            _doctorRepository.Add<User>(user);
 
             var doctor = new Doctor
             {
@@ -39,9 +40,10 @@ namespace HealthPlus.Application.Services
                 DateOfBirth= request.DateOfBirth,
                 UserId = user.Id,
                 User= user,
+                ProfileImage = request.ProfileImage,
             };
 
-            _doctorRepository.Add(doctor);
+            _doctorRepository.Add<Doctor>(doctor);
             _doctorRepository.SaveChanges();
 
             return new BaseResponse
@@ -74,6 +76,7 @@ namespace HealthPlus.Application.Services
                 DateOfBirth = doctor.DateOfBirth,
                 Email = doctor.User.Email,
                 PhoneNumber = doctor.User.PhoneNumber,
+                ProfileImage = doctor.ProfileImage,
                 Status = true
             };
         }
@@ -100,6 +103,7 @@ namespace HealthPlus.Application.Services
                 DateOfBirth = doctor.DateOfBirth,
                 Email = doctor.User.Email,
                 PhoneNumber = doctor.User.PhoneNumber,
+                ProfileImage = doctor.ProfileImage,
                 Status = true
             };
         }
@@ -190,7 +194,8 @@ namespace HealthPlus.Application.Services
                 Address = x.User.Address,
                 Email = x.User.Email,
                 DateOfBirth = x.DateOfBirth,
-                PhoneNumber= x.User.PhoneNumber
+                PhoneNumber= x.User.PhoneNumber,
+                ProfileImage = x.ProfileImage
             }).ToList();
 
             return doctorResponse;
@@ -199,6 +204,22 @@ namespace HealthPlus.Application.Services
         public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
         {
             throw new NotImplementedException();
+        }
+
+        public BaseResponse DeleteDoctor(int id)
+        {
+            var doctor = _doctorRepository.GetDoctor(x => x.Id == id);
+
+            _doctorRepository.Delete<Doctor>(doctor);
+            _doctorRepository.Delete<User>(doctor.User);
+
+            _doctorRepository.SaveChanges();
+
+            return new BaseResponse
+            {
+                Message = "Profie deleted sucessfully",
+                Status = true
+            };
         }
     }
 }

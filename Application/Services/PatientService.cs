@@ -31,7 +31,7 @@ namespace HealthPlus.Application.Services
             };
             user.Password =$"{request.Password} {salt}";
 
-            _repository.Add(user);
+            _repository.Add<User>(user);
 
             var patient = new Patient
             {

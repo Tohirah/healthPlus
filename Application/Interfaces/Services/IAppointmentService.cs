@@ -14,6 +14,7 @@ namespace HealthPlus.Application.Interfaces.Services
         BaseResponse AssignAppointmentToDoctor(int id, UpdateAppointmentRequestModel request);
         BaseResponse FulfillAppointment(int id);
         AppointmentResponseModel GetAppointmentById(int id);
+        IList<AppointmentResponseModel> GetAppointments();
 
     }
 }
