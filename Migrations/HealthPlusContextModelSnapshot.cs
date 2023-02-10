@@ -138,7 +138,7 @@ namespace HealthPlus.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("MedicalRecordId")
+                    b.Property<int?>("MedicalRecordId")
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
@@ -540,15 +540,11 @@ namespace HealthPlus.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", "MedicalRecord")
+                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", null)
                         .WithMany("Consultations")
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MedicalRecordId");
 
                     b.Navigation("Appointment");
-
-                    b.Navigation("MedicalRecord");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Doctor", b =>

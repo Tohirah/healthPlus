@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthPlus.Migrations
 {
     [DbContext(typeof(HealthPlusContext))]
-    [Migration("20230208190340_nurse entity")]
-    partial class nurseentity
+    [Migration("20230210181237_et all")]
+    partial class etall
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,7 +140,7 @@ namespace HealthPlus.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("MedicalRecordId")
+                    b.Property<int?>("MedicalRecordId")
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
@@ -542,15 +542,11 @@ namespace HealthPlus.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", "MedicalRecord")
+                    b.HasOne("HealthPlus.Domain.Entities.MedicalRecord", null)
                         .WithMany("Consultations")
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MedicalRecordId");
 
                     b.Navigation("Appointment");
-
-                    b.Navigation("MedicalRecord");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Doctor", b =>
