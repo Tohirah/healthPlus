@@ -199,10 +199,10 @@ namespace HealthPlus.Application.Services
             };
         }
 
-        public UserResponseModel LogIn(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
+        // public UserResponseModel LogIn(string email, string password)
+        // {
+        //     throw new NotImplementedException();
+        // }
 
         public BaseResponse Login(string email, string password)
         {
