@@ -34,7 +34,6 @@ builder.Services.AddScoped<IConsultationService, ConsultationService> ();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
