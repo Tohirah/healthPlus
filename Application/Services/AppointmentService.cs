@@ -126,7 +126,14 @@ namespace HealthPlus.Application.Services
 
             var appointmentUpdate = _repository.Update<Appointment>(appointment);
             _repository.SaveChanges();
-
+            if (appointmentUpdate == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Appoinment Status not updated",
+                    Status = false
+                };
+            }
             return new BaseResponse
             {
                 Message = "Appointment Rejected",
