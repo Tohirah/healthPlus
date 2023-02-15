@@ -212,16 +212,18 @@ namespace HealthPlus.Application.Services
 
             var appointmentResponse = appointments.Select(x => new AppointmentResponseModel
             {
-                Id= x.Id,
+                Id = x.Id,
                 AppointmentDate = x.AppointmentDate,
                 DoctorId = x.DoctorId,
+                Doctor = x.Doctor.User.FirstName + ' ' + x.Doctor.User.LastName,
                 PatientId = x.PatientId,
+                //Patient = x.Patient.User.FirstName + ' ' + x.Patient.User.LastName,
                 Reason = x.Reason,
                 IsAssigned = x.IsAssigned,
                 IsPaid = x.IsPaid,
                 AppointmentStatus = x.AppointmentStatus,
                 Cost = x.Cost
-            }).ToList();
+        }).ToList();
 
             return appointmentResponse;
         }

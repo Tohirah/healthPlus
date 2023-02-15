@@ -68,6 +68,7 @@ namespace HealthPlus.Application.Services
             }
             return new DoctorResponseModel
             {
+                Id = doctor.User..Id,
                 FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
                 LastName = doctor.User.LastName,
@@ -187,6 +188,7 @@ namespace HealthPlus.Application.Services
 
             var doctorResponse = doctors.Select(x => new DoctorResponseModel
             {
+                Id = x.Id,
                 DoctorNumber = x.DoctorNumber,
                 FirstName = x.User.FirstName,
                 LastName = x.User.LastName,
@@ -199,11 +201,6 @@ namespace HealthPlus.Application.Services
             }).ToList();
 
             return doctorResponse;
-        }
-
-        public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
-        {
-            throw new NotImplementedException();
         }
 
         public BaseResponse DeleteDoctor(int id)
