@@ -55,6 +55,20 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
 
+        [HttpGet("updateDoctor/{id}")]
+        public IActionResult UpdateDoctor([FromRoute] int id)
+        {
+            var response = _doctorService.GetDoctorById(id);
+            return response.Status ? Ok(response) : BadRequest();
+        }
+
+        [HttpPut("updateDoctor/{id}")]
+        public IActionResult UpdateDoctor([FromRoute] int id, UpdateDoctorRequestModel request)
+        {
+            var response = _doctorService.UpdateDoctor(id, request);
+            return response.Status ? Ok(response) : BadRequest();
+        }
+
         [HttpPut("updatePassword/{id}")]
         public IActionResult UpdatePassword([FromRoute] int id, UpdatePasswordRequestModel password)
         {

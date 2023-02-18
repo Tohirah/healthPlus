@@ -15,13 +15,6 @@ namespace HealthPlus.Application.Services
         }
         public BaseResponse CreateNurse(CreateNurseRequestModel request)
         {
-            var nurse = new Nurse
-            {
-                NurseNumber = $"NR{Guid.NewGuid().ToString().Substring(0, 7)}",
-                DateOfBirth = request.DateOfBirth,
-                ProfileImage = request.ProfileImage
-            };
-
             var salt = Guid.NewGuid().ToString();
             var user = new User
             {
@@ -36,8 +29,18 @@ namespace HealthPlus.Application.Services
                 Salt = salt
             };
 
-            _repository.Add<Nurse>(nurse);
             _repository.Add<User>(user);
+
+            var nurse = new Nurse
+            {
+                NurseNumber = $"NR{Guid.NewGuid().ToString().Substring(0, 7)}",
+                DateOfBirth = request.DateOfBirth,
+                UserId = user.Id,
+                User = user,
+                ProfileImage = request.ProfileImage
+            };
+
+            _repository.Add<Nurse>(nurse);
             _repository.SaveChanges();
 
             return new BaseResponse

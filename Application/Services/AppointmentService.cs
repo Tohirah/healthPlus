@@ -262,6 +262,37 @@ namespace HealthPlus.Application.Services
             var appointmentResponse = patientAppointment.Select(x => new AppointmentResponseModel
             {
                 Id = x.Id,
+                Id = x.Id,
+                AppointmentDate = x.AppointmentDate,
+                DoctorId = x.DoctorId,
+                Doctor = x.Doctor.User.FirstName + ' ' + x.Doctor.User.LastName,
+                PatientId = x.PatientId,
+                Patient = x.Patient.User.FirstName + ' ' + x.Patient.User.LastName,
+                Reason = x.Reason,
+                IsAssigned = x.IsAssigned,
+                IsPaid = x.IsPaid,
+                AppointmentStatus = x.AppointmentStatus,
+                Cost = x.Cost
+        }).ToList();
+
+            return appointmentResponse;
+        }
+
+        public IList<AppointmentResponseModel> GetAppointmentByPatientId(int id)
+        {
+            var appointments = _repository.GetAllApppointment().ToList();
+            var patientAppointment = new List<Appointment>();
+            foreach(Appointment appointment in appointments)
+            {
+                if(appointment.PatientId == id)
+                {
+                    patientAppointment.Add(appointment);
+                }
+            }
+
+            var appointmentResponse = patientAppointment.Select(x => new AppointmentResponseModel
+            {
+                Id = x.Id,
                 AppointmentDate = x.AppointmentDate,
                 DoctorId = x.DoctorId,
                 Doctor = x.Doctor.User.FirstName + ' ' + x.Doctor.User.LastName,

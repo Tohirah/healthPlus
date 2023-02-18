@@ -20,6 +20,9 @@ namespace HealthPlus.Application.Interfaces.Repositories
         IList<Consultation> GetAllConsultation(Expression<Func<Consultation, bool>> expression = null);
         Nurse GetNurse(Expression<Func<Nurse, bool>> expression);
         IList<Nurse> GetAllNurses(Expression<Func<Nurse, bool>> expression = null);
+        Appointment GetAppointment(Expression<Func<Appointment, bool>> expression);
+        IList<Appointment> GetAllApppointment(Expression<Func<Appointment, bool>> expression = null);
+
 
 
         int SaveChanges();
