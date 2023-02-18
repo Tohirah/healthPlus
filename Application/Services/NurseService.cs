@@ -52,22 +52,98 @@ namespace HealthPlus.Application.Services
 
         public NurseResponseModel GetNurseById(int id)
         {
-            throw new NotImplementedException();
+            var nurse = _repository.GetNurse(x => x.Id == id);
+
+            if (nurse == null)
+            {
+                return new NurseResponseModel
+                {
+                    Message = $"No record found for Nurse with Id {id}",
+                    Status = false
+                };
+            }
+            return new NurseResponseModel
+            {
+                FirstName = nurse.User.FirstName,
+                NurseNumber = nurse.NurseNumber,
+                LastName = nurse.User.LastName,
+                Gender = nurse.User.Gender,
+                Address = nurse.User.Address,
+                DateOfBirth = nurse.DateOfBirth,
+                Email = nurse.User.Email,
+                PhoneNumber = nurse.User.PhoneNumber,
+                ProfileImage = nurse.ProfileImage,
+                Status = true
+            };
         }
+
 
         public NurseResponseModel GetNurseByNurseNumber(string nurseNumber)
         {
-            throw new NotImplementedException();
+            var nurse = _repository.GetNurse(x=> x.NurseNumber == nurseNumber);
+            if(nurse == null)
+            {
+                return new NurseResponseModel
+                {
+                    Message = $"No Record found with Nurse Number {nurseNumber}",
+                    Status = false
+                };
+            }
+
+            return new NurseResponseModel
+            {
+                FirstName = nurse.User.FirstName,
+                NurseNumber = nurse.NurseNumber,
+                LastName = nurse.User.LastName,
+                Gender = nurse.User.Gender,
+                Address = nurse.User.Address,
+                DateOfBirth = nurse.DateOfBirth,
+                Email = nurse.User.Email,
+                PhoneNumber = nurse.User.PhoneNumber,
+                ProfileImage = nurse.ProfileImage,
+                Status = true
+            };
         }
 
         public IList<NurseResponseModel> GetNurses()
         {
-            throw new NotImplementedException();
+             var nurses = _repository.GetAllNurses();
+
+
+            var nurseResponse = nurses.Select(x => new NurseResponseModel
+            {
+                NurseNumber = x.NurseNumber,
+                FirstName = x.User.FirstName,
+                LastName = x.User.LastName,
+                Gender = x.User.Gender,
+                Address = x.User.Address,
+                Email = x.User.Email,
+                DateOfBirth = x.DateOfBirth,
+                PhoneNumber= x.User.PhoneNumber,
+                ProfileImage = x.ProfileImage
+            }).ToList();
+
+            return nurseResponse;
         }
 
         public BaseResponse UpdateNurse(UpdateNurseRequestModel request)
         {
             throw new NotImplementedException();
+        }
+        public BaseResponse DeleteNurse(int id)
+        {
+            var nurse = _repository.GetNurse(x => x.Id == id);
+
+            _repository.Delete<Nurse>(nurse);
+            _repository.Delete<User>(nurse.User);
+
+            _repository.SaveChanges();
+
+            return new BaseResponse
+            {
+                Message = "Profie deleted sucessfully",
+                Status = true
+            };
         }
     }
 }

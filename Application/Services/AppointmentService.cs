@@ -26,9 +26,9 @@ namespace HealthPlus.Application.Services
                 Cost = hospitalService.Price
             };
 
-            if(request.DoctorId > 0)
+            if (request.DoctorId > 0)
             {
-                appointment.IsAssigned= true;
+                appointment.IsAssigned = true;
             }
             else
             {
@@ -110,7 +110,7 @@ namespace HealthPlus.Application.Services
         public BaseResponse CancelAppointment(int id)
         {
             var appointment = _repository.Get<Appointment>(x => x.Id == id);
-            if(appointment.AppointmentStatus == (AppointmentStatus) 1)
+            if (appointment.AppointmentStatus == (AppointmentStatus)1)
             {
                 appointment.AppointmentStatus = (AppointmentStatus)5;
             }
@@ -158,15 +158,18 @@ namespace HealthPlus.Application.Services
         }
         public AppointmentResponseModel GetAppointmentById(int id)
         {
-            var appointment = _repository.Get<Appointment>(x => x.Id == id);
+            var appointment = _repository.GetAppointment(x => x.Id == id);
 
 
             return new AppointmentResponseModel
             {
+                Id = appointment.Id,
                 AppointmentDate = appointment.AppointmentDate,
                 AppointmentStatus = appointment.AppointmentStatus,
                 PatientId = appointment.PatientId,
+                Patient = $"{appointment.Patient.User.FirstName} {appointment.Patient.User.LastName}",
                 DoctorId = appointment.DoctorId,
+                Doctor = $"{appointment.Doctor.User.FirstName} {appointment.Doctor.User.LastName}",
                 IsAssigned = appointment.IsAssigned,
                 IsPaid = appointment.IsPaid,
                 Cost = appointment.Cost,
@@ -228,6 +231,37 @@ namespace HealthPlus.Application.Services
 
             var appointmentResponse = appointments.Select(x => new AppointmentResponseModel
             {
+                Id = x.Id,
+                AppointmentDate = x.AppointmentDate,
+                DoctorId = x.DoctorId,
+                Doctor = x.Doctor.User.FirstName + ' ' + x.Doctor.User.LastName,
+                PatientId = x.PatientId,
+                Patient = x.Patient.User.FirstName + ' ' + x.Patient.User.LastName,
+                Reason = x.Reason,
+                IsAssigned = x.IsAssigned,
+                IsPaid = x.IsPaid,
+                AppointmentStatus = x.AppointmentStatus,
+                Cost = x.Cost
+            }).ToList();
+
+            return appointmentResponse;
+        }
+
+        public IList<AppointmentResponseModel> GetAppointmentByPatientId(int id)
+        {
+            var appointments = _repository.GetAllApppointment().ToList();
+            var patientAppointment = new List<Appointment>();
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.PatientId == id)
+                {
+                    patientAppointment.Add(appointment);
+                }
+            }
+
+            var appointmentResponse = patientAppointment.Select(x => new AppointmentResponseModel
+            {
+                Id = x.Id,
                 Id = x.Id,
                 AppointmentDate = x.AppointmentDate,
                 DoctorId = x.DoctorId,
