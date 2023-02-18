@@ -5,6 +5,8 @@ namespace HealthPlus.Application.DTOs
     public class DoctorResponseModel : BaseResponse
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
+        public int DepartmentId { get; set; }
         public string DoctorNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

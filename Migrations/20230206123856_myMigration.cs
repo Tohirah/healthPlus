@@ -9,113 +9,99 @@ namespace HealthPlus.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Consultations_MedicalRecords_MedicalRecordId",
-                table: "Consultations");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_MedicalRecords_Consultations_ConsultationId",
-                table: "MedicalRecords");
-
-            migrationBuilder.DropIndex(
-                name: "IX_MedicalRecords_ConsultationId",
-                table: "MedicalRecords");
-
-            migrationBuilder.DropColumn(
-                name: "ConsultationId",
-                table: "MedicalRecords");
 
             migrationBuilder.RenameColumn(
                 name: "SUgarLevel",
                 table: "Consultations",
                 newName: "SugarLevel");
 
-            migrationBuilder.AddColumn<string>(
-                name: "CreatedBy",
-                table: "MedicalRecords",
-                type: "longtext",
-                nullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            //migrationBuilder.AddColumn<string>(
+            //    name: "CreatedBy",
+            //    table: "MedicalRecords",
+            //    type: "longtext",
+            //    nullable: true)
+            //    .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "DateCreated",
-                table: "MedicalRecords",
-                type: "datetime(6)",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+            //migrationBuilder.AddColumn<DateTime>(
+            //    name: "DateCreated",
+            //    table: "MedicalRecords",
+            //    type: "datetime(6)",
+            //    nullable: false,
+            //    defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "DateUpdated",
-                table: "MedicalRecords",
-                type: "datetime(6)",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+            //migrationBuilder.AddColumn<DateTime>(
+            //    name: "DateUpdated",
+            //    table: "MedicalRecords",
+            //    type: "datetime(6)",
+            //    nullable: false,
+            //    defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsDeleted",
-                table: "MedicalRecords",
-                type: "tinyint(1)",
-                nullable: false,
-                defaultValue: false);
+            //migrationBuilder.AddColumn<bool>(
+            //    name: "IsDeleted",
+            //    table: "MedicalRecords",
+            //    type: "tinyint(1)",
+            //    nullable: false,
+            //    defaultValue: false);
 
-            migrationBuilder.AddColumn<string>(
-                name: "ModifiedBy",
-                table: "MedicalRecords",
-                type: "longtext",
-                nullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            //migrationBuilder.AddColumn<string>(
+            //    name: "ModifiedBy",
+            //    table: "MedicalRecords",
+            //    type: "longtext",
+            //    nullable: true)
+            //    .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "MedicalRecordId",
-                table: "Consultations",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
+            //migrationBuilder.AlterColumn<int>(
+            //    name: "MedicalRecordId",
+            //    table: "Consultations",
+            //    type: "int",
+            //    nullable: false,
+            //    defaultValue: 0,
+            //    oldClrType: typeof(int),
+            //    oldType: "int",
+            //    oldNullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Complaint",
-                table: "Consultations",
-                type: "longtext",
-                nullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            //migrationBuilder.AddColumn<string>(
+            //    name: "Complaint",
+            //    table: "Consultations",
+            //    type: "longtext",
+            //    nullable: true)
+            //    .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<string>(
-                name: "CreatedBy",
-                table: "Consultations",
-                type: "longtext",
-                nullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            //migrationBuilder.AddColumn<string>(
+            //    name: "CreatedBy",
+            //    table: "Consultations",
+            //    type: "longtext",
+            //    nullable: true)
+            //    .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "DateCreated",
-                table: "Consultations",
-                type: "datetime(6)",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+            //migrationBuilder.AddColumn<DateTime>(
+            //    name: "DateCreated",
+            //    table: "Consultations",
+            //    type: "datetime(6)",
+            //    nullable: false,
+            //    defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "DateUpdated",
-                table: "Consultations",
-                type: "datetime(6)",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+            //migrationBuilder.AddColumn<DateTime>(
+            //    name: "DateUpdated",
+            //    table: "Consultations",
+            //    type: "datetime(6)",
+            //    nullable: false,
+            //    defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsDeleted",
-                table: "Consultations",
-                type: "tinyint(1)",
-                nullable: false,
-                defaultValue: false);
+            //migrationBuilder.AddColumn<bool>(
+            //    name: "IsDeleted",
+            //    table: "Consultations",
+            //    type: "tinyint(1)",
+            //    nullable: false,
+            //    defaultValue: false);
 
-            migrationBuilder.AddColumn<string>(
-                name: "ModifiedBy",
-                table: "Consultations",
-                type: "longtext",
-                nullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4");
+            //migrationBuilder.AddColumn<string>(
+            //    name: "ModifiedBy",
+            //    table: "Consultations",
+            //    type: "longtext",
+            //    nullable: true)
+            //    .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Consultations_MedicalRecords_MedicalRecordId",
@@ -128,9 +114,7 @@ namespace HealthPlus.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Consultations_MedicalRecords_MedicalRecordId",
-                table: "Consultations");
+            
 
             migrationBuilder.DropColumn(
                 name: "CreatedBy",
