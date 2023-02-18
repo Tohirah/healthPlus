@@ -59,7 +59,7 @@ namespace HealthPlus.Application.Services
                     Status = false
                 };
             }
-             return new NurseResponseModel
+            return new NurseResponseModel
             {
                 FirstName = nurse.User.FirstName,
                 NurseNumber = nurse.NurseNumber,
