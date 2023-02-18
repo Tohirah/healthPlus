@@ -9,5 +9,6 @@ namespace HealthPlus.Application.Interfaces.Services
         NurseResponseModel GetNurseById(int id);
         NurseResponseModel GetNurseByNurseNumber(string nurseNumber);
         BaseResponse UpdateNurse(UpdateNurseRequestModel request);
+        BaseResponse DeleteNurse(int id);
     }
 }
