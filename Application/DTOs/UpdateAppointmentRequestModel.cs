@@ -6,7 +6,6 @@ namespace HealthPlus.Application.DTOs
     {
         public DateTime AppointmentDate { get; set; }
         public int DoctorId { get; set; }
-        public bool IsAssigned { get; set; }
-        public bool IsPaid { get; set; }
+        public string Reason { get; set; }
     }
 }

@@ -204,32 +204,45 @@ namespace HealthPlus.Application.Services
         //     throw new NotImplementedException();
         // }
 
-        public BaseResponse Login(string email, string password)
+        public UserResponseModel Login(string email, string password)
         {
-            var user = _repository.Get<User>(x => x.Email== email);
-            if(user != null && user.Password == password)
+           if(email != null && password != null) 
             {
-                return new BaseResponse
+                var user = _repository.Get<User>(x => x.Email == email);
+                if (user != null && user.Password == password)
                 {
-                    Message = "Login successful",
-                    Status = true
-                };
-            }
-            else if(user != null)
-            {
-                return new BaseResponse
+                    return new UserResponseModel
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        UserName = user.UserName,
+                        Message = "Login successful",
+                        Status = true
+                    };
+                }
+                else if (user != null)
                 {
-                    Message = "Incorrect Password",
+                    return new UserResponseModel
+                    {
+                        Message = "Incorrect Password",
+                        Status = false
+                    };
+                }
+
+                return new UserResponseModel
+                {
+                    Message = $"User not found with email {email}",
                     Status = false
                 };
+
             }
 
-            return new BaseResponse
+            return new UserResponseModel
             {
-                Message = $"User not found with email {email}",
+                Message = "Email or password  ot provided. Fill all details",
                 Status = false
             };
-            
         }
     }
 }

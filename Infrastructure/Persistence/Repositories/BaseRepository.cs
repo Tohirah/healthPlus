@@ -88,6 +88,16 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
             return _context.Consultations.Include(x => x.Appointment).ToList();
         }
 
+        public Appointment GetAppointment(Expression<Func<Appointment, bool>> expression)
+        {
+            return _context.Appointments.Include(x => x.Doctor).ThenInclude(x => x.User).Include(x => x.Patient).ThenInclude(x => x.User).SingleOrDefault(expression);
+        }
+
+        public IList<Appointment> GetAllApppointment(Expression<Func<Appointment, bool>> expression = null)
+        {
+            return _context.Appointments.Include(x => x.Doctor).ThenInclude(x => x.User).Include(x => x.Patient).ThenInclude(x => x.User).ToList();
+        }
+
         public Nurse GetNurse(Expression<Func<Nurse, bool>> expression)
         {
             return _context.Nurses.Include(x => x.User).SingleOrDefault(expression);
@@ -96,6 +106,7 @@ namespace HealthPlus.Infrastructure.Perisstence.Repositories
         public IList<Nurse> GetAllNurses(Expression<Func<Nurse, bool>> expression = null)
         {
             return _context.Nurses.Include(x => x.User).ToList();
+
         }
     }
 }

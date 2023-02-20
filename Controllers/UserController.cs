@@ -1,5 +1,6 @@
 ﻿using HealthPlus.Application.DTOs;
 using HealthPlus.Application.Interfaces.Services;
+using HealthPlus.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace HealthPlus.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IJWTAuthentication _auth;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IJWTAuthentication auth)
         {
             _userService = userService;
+            _auth = auth;
         }
 
         [HttpPost]
@@ -66,20 +69,30 @@ namespace HealthPlus.Controllers
             return response.Status ? Ok(response) : NotFound(response.Message);
         }
 
-        //[HttpGet]
-        //public IActionResult GetUsers()
-        //{
-        //    var response = _userService.GetUsers();
+        [HttpGet("getUsers")]
+        public IActionResult GetUsers()
+        {
+            var response = _userService.GetUsers();
 
-        //    return Ok(response);
-        //}
+            return Ok(response);
+        }
 
         [HttpGet("Login/{email}")]
-        public IActionResult Login([FromRoute] string email, string password)
+        public IActionResult Login([FromRoute] LoginRequestModel request)
         {
-            var response = _userService.Login(email, password);
+            var login = _userService.Login(request.Email, request.Password);
 
-            return response.Status ? Ok(response) : BadRequest(response.Message);
+              if (!login.Status)
+               {
+                   return BadRequest(login);
+               }
+               var token = _auth.GenerateToken(login);
+               var response = new LoginResponseModel
+               {
+                   Data = login,
+                   Token = token
+               };
+               return Ok(response);
         }
     }
 }

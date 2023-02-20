@@ -27,9 +27,9 @@ namespace HealthPlus.Application.Services
                 Gender = request.Gender,
                 Address = request.Address,
                 UserName = patientNumber,
-                Salt = salt
+                Salt = salt,
+                Password = $"{request.Password} {salt}"
             };
-            user.Password =$"{request.Password} {salt}";
 
             _repository.Add<User>(user);
 
@@ -60,7 +60,6 @@ namespace HealthPlus.Application.Services
         public BaseResponse UpdatePatient(int id, UpdatePatientRequestModel request)
         {
             var patient = _repository.GetPatient(x => x.Id == id);
-            patient.User.Email = request.Email;
             patient.User.PhoneNumber = request.PhoneNumber;
             patient.DateOfBirth = request.DateOfBirth;
             patient.Allergies = request.Allergies;
@@ -152,6 +151,9 @@ namespace HealthPlus.Application.Services
             }
             return new PatientResponseModel
             {
+                Id = patient.Id,
+                UserId = patient.User.Id,
+                Username = patient.User.UserName,
                 PatientNumber = patient.PatientNumber,
                 FirstName = patient.User.FirstName,
                 LastName = patient.User.LastName,
@@ -184,6 +186,9 @@ namespace HealthPlus.Application.Services
             }
             return new PatientResponseModel
             {
+                Id = patient.Id,
+                UserId = patient.User.Id,
+                Username = patient.User.UserName,
                 FirstName = patient.User.FirstName,
                 LastName = patient.User.LastName,
                 Gender = patient.User.Gender,
@@ -207,6 +212,9 @@ namespace HealthPlus.Application.Services
 
             var patientResponse = patients.Select(x => new PatientResponseModel
             {
+                Id = x.Id,
+                UserId = x.User.Id,
+                Username = x.User.UserName,
                 FirstName = x.User.FirstName,
                 LastName = x.User.LastName,
                 Gender = x.User.Gender,

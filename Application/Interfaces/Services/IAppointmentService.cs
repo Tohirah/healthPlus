@@ -15,6 +15,7 @@ namespace HealthPlus.Application.Interfaces.Services
         BaseResponse FulfillAppointment(int id);
         AppointmentResponseModel GetAppointmentById(int id);
         IList<AppointmentResponseModel> GetAppointments();
+        IList<AppointmentResponseModel> GetAppointmentByPatientId(int id);
 
     }
 }

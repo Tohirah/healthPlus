@@ -4,6 +4,9 @@ namespace HealthPlus.Application.DTOs
 {
     public class PatientResponseModel : BaseResponse
     {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string Username { get; set; }
         public string PatientNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

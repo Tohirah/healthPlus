@@ -63,7 +63,7 @@ namespace HealthPlus.Application.Services
             // {
             appointment.AppointmentDate = request.AppointmentDate;
             appointment.DoctorId = request.DoctorId;
-            appointment.IsAssigned = request.IsAssigned;
+            appointment.Reason = request.Reason;
             // }
 
             var appointmentUpdate = _repository.Update<Appointment>(appointment);

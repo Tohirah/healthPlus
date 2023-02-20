@@ -30,10 +30,17 @@ namespace HealthPlus.Application.Services
                 Salt= salt
                 
             };
+
             user.Password = $"{request.Password} {salt}";
 
             _doctorRepository.Add<User>(user);
-
+            var role = _doctorRepository.Get<Role>(x => x.Name == "Doctor");
+            var userRole = new UserRole
+            {
+                UserId = user.Id,
+                RoleId = role.Id,
+            };
+            _doctorRepository.Add<UserRole>(userRole);
             var doctor = new Doctor
             {
                 DoctorNumber = $"DR{Guid.NewGuid().ToString().Substring(4, 4).Replace("-", "")}",
@@ -68,6 +75,8 @@ namespace HealthPlus.Application.Services
             }
             return new DoctorResponseModel
             {
+                Id = doctor.Id,
+                UserId = doctor.UserId,
                 FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
                 LastName = doctor.User.LastName,
@@ -95,6 +104,8 @@ namespace HealthPlus.Application.Services
 
             return new DoctorResponseModel
             {
+                Id = doctor.Id,
+                UserId = doctor.UserId,
                 FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
                 LastName = doctor.User.LastName,
@@ -187,6 +198,8 @@ namespace HealthPlus.Application.Services
 
             var doctorResponse = doctors.Select(x => new DoctorResponseModel
             {
+                Id = x.Id,
+                UserId = x.UserId,
                 DoctorNumber = x.DoctorNumber,
                 FirstName = x.User.FirstName,
                 LastName = x.User.LastName,
