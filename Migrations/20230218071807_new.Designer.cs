@@ -3,6 +3,7 @@ using System;
 using HealthPlus.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthPlus.Migrations
 {
     [DbContext(typeof(HealthPlusContext))]
-    partial class HealthPlusContextModelSnapshot : ModelSnapshot
+    [Migration("20230218071807_new")]
+    partial class @new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,8 +104,6 @@ namespace HealthPlus.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
@@ -217,9 +217,6 @@ namespace HealthPlus.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("DoctorNumber")
                         .HasColumnType("longtext");
 
@@ -236,8 +233,6 @@ namespace HealthPlus.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("UserId");
 
@@ -302,8 +297,7 @@ namespace HealthPlus.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId")
-                        .IsUnique();
+                    b.HasIndex("PatientId");
 
                     b.ToTable("MedicalRecords");
                 });
@@ -531,19 +525,11 @@ namespace HealthPlus.Migrations
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Appointment", b =>
                 {
-                    b.HasOne("HealthPlus.Domain.Entities.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HealthPlus.Domain.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("Patient");
                 });
@@ -569,19 +555,11 @@ namespace HealthPlus.Migrations
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Doctor", b =>
                 {
-                    b.HasOne("HealthPlus.Domain.Entities.Department", "Department")
-                        .WithMany("Doctor")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HealthPlus.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Department");
 
                     b.Navigation("User");
                 });
@@ -589,8 +567,8 @@ namespace HealthPlus.Migrations
             modelBuilder.Entity("HealthPlus.Domain.Entities.MedicalRecord", b =>
                 {
                     b.HasOne("HealthPlus.Domain.Entities.Patient", "Patient")
-                        .WithOne("MedicalRecord")
-                        .HasForeignKey("HealthPlus.Domain.Entities.MedicalRecord", "PatientId")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -638,19 +616,9 @@ namespace HealthPlus.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HealthPlus.Domain.Entities.Department", b =>
-                {
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("HealthPlus.Domain.Entities.MedicalRecord", b =>
                 {
                     b.Navigation("Consultations");
-                });
-
-            modelBuilder.Entity("HealthPlus.Domain.Entities.Patient", b =>
-                {
-                    b.Navigation("MedicalRecord");
                 });
 
             modelBuilder.Entity("HealthPlus.Domain.Entities.Role", b =>
