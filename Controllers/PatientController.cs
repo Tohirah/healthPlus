@@ -3,6 +3,7 @@ using HealthPlus.Application.Interfaces.Services;
 using HealthPlus.Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HealthPlus.Controllers
 {
@@ -51,10 +52,11 @@ namespace HealthPlus.Controllers
         }
 
 
-        [HttpPut("updatePatient/{id}")]
-        public IActionResult UpdatePatient([FromRoute] int id,  UpdatePatientRequestModel request)
+        [HttpPut("updatePatient")]
+        public IActionResult UpdatePatient(UpdatePatientRequestModel request)
         {
-            var response = _patientService.UpdatePatient(id, request);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var response = _patientService.UpdatePatient(int.Parse(userId), request);
             return response.Status ? Ok(request) : BadRequest(response);
         }
     }

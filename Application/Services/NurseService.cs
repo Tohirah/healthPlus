@@ -33,29 +33,6 @@ namespace HealthPlus.Application.Services
             user.Password = $"{request.Password} {salt}";
             _repository.Add<User>(user);
 
-            var nurse = new Nurse
-            {
-                NurseNumber = $"NR{Guid.NewGuid().ToString().Substring(4, 4).Replace("-", "")}",
-                DepartmentId = request.DepartmentId,
-                DateOfBirth= request.DateOfBirth,
-                UserId = user.Id,
-                User= user,
-                ProfileImage = request.ProfileImage,
-            };
-
-            _repository.Add<User>(user);
-
-            var nurse = new Nurse
-            {
-                NurseNumber = $"NR{Guid.NewGuid().ToString().Substring(0, 7)}",
-                DateOfBirth = request.DateOfBirth,
-                UserId = user.Id,
-                User = user,
-                ProfileImage = request.ProfileImage
-            };
-
-            user.Password = $"{request.Password} {salt}";
-            _repository.Add<User>(user);
 
             var nurse = new Nurse
             {

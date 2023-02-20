@@ -4,6 +4,7 @@ using HealthPlus.Application.Services;
 using HealthPlus.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HealthPlus.Controllers
 {
@@ -93,6 +94,7 @@ namespace HealthPlus.Controllers
         [HttpGet("getAppointmentByPatientId/{id}")]
         public IActionResult GetAppointmentByPatientId([FromRoute] int id)
         {
+           
             var response = _appointmentService.GetAppointmentByPatientId(id);
 
             return (response != null) ? Ok(response) : BadRequest(response);

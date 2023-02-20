@@ -107,7 +107,6 @@ namespace HealthPlus.Application.Services
             {
                 Id = doctor.Id,
                 UserId = doctor.UserId,
-                FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
                 DepartmentId = doctor.DepartmentId,
                 FirstName = doctor.User.FirstName,
