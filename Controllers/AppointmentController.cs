@@ -90,5 +90,21 @@ namespace HealthPlus.Controllers
             return (response != null) ? Ok(response) : BadRequest(response) ;
         }
 
+        [HttpGet("getAppointmentByPatientId/{id}")]
+        public IActionResult GetAppointmentByPatientId(int id)
+        {
+            var response = _appointmentService.GetAppointmentByPatientId(id);
+
+            return (response != null) ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpPut("updateAppointment/{id}")]
+        public IActionResult UpdateAppointment([FromRoute] int id, UpdateAppointmentRequestModel request)
+        {
+            var response = _appointmentService.UpdateAppointment(id, request);
+
+            return response.Status? Ok(response): BadRequest(response);
+        }
+
     }
 }

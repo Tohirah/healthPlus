@@ -36,6 +36,7 @@ namespace HealthPlus.Application.Services
             var doctor = new Doctor
             {
                 DoctorNumber = $"DR{Guid.NewGuid().ToString().Substring(4, 4).Replace("-", "")}",
+                DepartmentId = request.DepartmentId,
                 DateOfBirth= request.DateOfBirth,
                 UserId = user.Id,
                 User= user,
@@ -67,8 +68,10 @@ namespace HealthPlus.Application.Services
             }
             return new DoctorResponseModel
             {
+                Id = doctor.User.Id,
                 FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
+                DepartmentId= doctor.DepartmentId,
                 LastName = doctor.User.LastName,
                 Gender = doctor.User.Gender,
                 Address = doctor.User.Address,
@@ -94,8 +97,9 @@ namespace HealthPlus.Application.Services
 
             return new DoctorResponseModel
             {
-                FirstName = doctor.User.FirstName,
                 DoctorNumber = doctor.DoctorNumber,
+                DepartmentId = doctor.DepartmentId,
+                FirstName = doctor.User.FirstName,
                 LastName = doctor.User.LastName,
                 Gender = doctor.User.Gender,
                 Address = doctor.User.Address,
@@ -186,7 +190,10 @@ namespace HealthPlus.Application.Services
 
             var doctorResponse = doctors.Select(x => new DoctorResponseModel
             {
+                Id = x.Id,
+                UserId = x.UserId,
                 DoctorNumber = x.DoctorNumber,
+                DepartmentId= x.DepartmentId,
                 FirstName = x.User.FirstName,
                 LastName = x.User.LastName,
                 Gender = x.User.Gender,
@@ -198,11 +205,6 @@ namespace HealthPlus.Application.Services
             }).ToList();
 
             return doctorResponse;
-        }
-
-        public BaseResponse UpdateDoctor(UpdateDoctorRequestModel request)
-        {
-            throw new NotImplementedException();
         }
 
         public BaseResponse DeleteDoctor(int id)

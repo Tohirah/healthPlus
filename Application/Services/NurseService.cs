@@ -13,6 +13,7 @@ namespace HealthPlus.Application.Services
         {
             _repository = repository;
         }
+
         public BaseResponse CreateNurse(CreateNurseRequestModel request)
         {
         
@@ -24,10 +25,33 @@ namespace HealthPlus.Application.Services
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                Password = $"{request.Password} {salt}",
                 Gender = request.Gender,
                 UserName = request.Email,
-                Salt = salt
+                Salt= salt
+                
+            };
+            user.Password = $"{request.Password} {salt}";
+            _repository.Add<User>(user);
+
+            var nurse = new Nurse
+            {
+                NurseNumber = $"NR{Guid.NewGuid().ToString().Substring(4, 4).Replace("-", "")}",
+                DepartmentId = request.DepartmentId,
+                DateOfBirth= request.DateOfBirth,
+                UserId = user.Id,
+                User= user,
+                ProfileImage = request.ProfileImage,
+            };
+
+            _repository.Add<User>(user);
+
+            var nurse = new Nurse
+            {
+                NurseNumber = $"NR{Guid.NewGuid().ToString().Substring(0, 7)}",
+                DateOfBirth = request.DateOfBirth,
+                UserId = user.Id,
+                User = user,
+                ProfileImage = request.ProfileImage
             };
 
             user.Password = $"{request.Password} {salt}";
@@ -49,7 +73,7 @@ namespace HealthPlus.Application.Services
             {
                 Message = " Nurse Profile Created Successfully",
                 Status = true
-            };
+            };       
         }
 
         public NurseResponseModel GetNurseById(int id)
