@@ -34,12 +34,23 @@ namespace HealthPlus.Application.Services
             user.Password = $"{request.Password} {salt}";
             _doctorRepository.Add<User>(user);
             var role = _doctorRepository.Get<Role>(x => x.Name == "Doctor");
-            var userRole = new UserRole
+            if (role == null)
             {
-                UserId = user.Id,
-                RoleId = role.Id,
-            };
-            _doctorRepository.Add<UserRole>(userRole);
+                return new BaseResponse
+                {
+                    Message = "Role not found",
+                    Status = false
+                };
+            }
+            else
+            {
+                var userRole = new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = role.Id,
+                };
+                _doctorRepository.Add<UserRole>(userRole);
+            }
             var doctor = new Doctor
             {
                 DoctorNumber = $"DR{Guid.NewGuid().ToString().Substring(4, 4).Replace("-", "")}",

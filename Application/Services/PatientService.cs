@@ -26,12 +26,31 @@ namespace HealthPlus.Application.Services
                 PhoneNumber = request.PhoneNumber,
                 Gender = request.Gender,
                 Address = request.Address,
-                UserName = patientNumber,
+                UserName = request.Email,
                 Salt = salt,
                 Password = $"{request.Password} {salt}"
             };
 
             _repository.Add<User>(user);
+
+            var role = _repository.Get<Role>(x => x.Name == "Patient");
+            if(role == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Role not found",
+                    Status = false
+                };
+            }
+            else
+            {
+                var userRole = new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = role.Id,
+                };
+                _repository.Add<UserRole>(userRole);
+            }
 
             var patient = new Patient
             {
