@@ -11,16 +11,16 @@ namespace HealthPlus.Controllers
     {
         private readonly IRoleService _roleService;
 
-        public RoleController(IRoleService roleService) 
+        public RoleController(IRoleService roleService)
         {
             _roleService = roleService;
         }
 
-        [HttpPost]
-        public IActionResult CreateRole([FromBody] CreateRoleRequestModel request)
+        [HttpPost("createRoleRequestModel")]
+        public IActionResult CreateRole([FromForm] CreateRoleRequestModel request)
         {
             var response = _roleService.CreateRole(request);
-            
+
             return response.Status? Ok(response) : BadRequest(response);
         }
     }

@@ -7,28 +7,40 @@ namespace HealthPlus.Application.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly IRepository _roleRepository;
+        private readonly IRepository _repository;
 
-        public RoleService(IRepository roleRepository) 
+        public RoleService(IRepository repository)
         {
-            _roleRepository = roleRepository;
+            _repository = repository;
         }
-
         public BaseResponse CreateRole(CreateRoleRequestModel request)
         {
+
             var role = new Role
             {
                 Name = request.Name,
                 Description = request.Description
             };
-            _roleRepository.Add<Role>(role);
-            _roleRepository.SaveChanges();
+
+            _repository.Add<Role>(role);
+            _repository.SaveChanges();
 
             return new BaseResponse
             {
-                Message = "New Role Created Successfully",
+                Message = "Role created successfully",
                 Status = true
             };
+        }
+
+        public RoleResponseModel GetRolebyId(int id)
+        {
+            var role = _repository.Get<Role>(x => x.Id == id);
+            return new RoleResponseModel
+            {
+                Name = role.Name,
+                Description = role.Description
+            };
+
         }
     }
 }
